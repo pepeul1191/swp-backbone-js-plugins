@@ -17,3 +17,5 @@ Arrancar aplicación servidor:
 Fuentes:
 
 + https://github.com/expressjs
++ http://docs.sequelizejs.com/manual/tutorial/models-definition.html
++ https://github.com/pepeul1191/nodejs-hapi-ubicaciones.git
