@@ -36,6 +36,28 @@ const Estacion = db.define('estaciones', {
 		model: TipoEstacion, key: 'id', deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
 	}},
 });
+const Departamento = db.define('departamentos', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	nombre: { type: Sequelize.STRING, allowNull: false,  },
+});
+const Provincia = db.define('provincias', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	nombre: { type: Sequelize.TEXT, allowNull: false, },
+	departamento_id: { type: Sequelize.INTEGER, references: {
+		model: Departamento, key: 'id', deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+	}},
+});
+const Distrito = db.define('distritos', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	nombre: { type: Sequelize.TEXT, allowNull: false, },
+	provincia_id: { type: Sequelize.INTEGER, references: {
+		model: Provincia, key: 'id', deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+	}},
+});
+const DistritoProvinciaDepartamento = db.define('vw_distrito_provincia_departamento', {
+	id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+	nombre: { type: Sequelize.TEXT },
+});
 // servidor express
 var app = express();
 app.use(logger('dev'));
@@ -64,4 +86,27 @@ app.get('/tipo_estacion/listar', function (req, res) {
     res.statusCode = 500;
     res.send(JSON.stringify(rpta));
   });
+});
+app.get('/distrito/buscar', function (req, res) {
+  DistritoProvinciaDepartamento.findAll({
+      attributes: ['id', 'nombre'],
+      where: {
+        nombre : {
+          $like: req.query.nombre + '%'
+        }
+      },
+      limit: 10,
+    }).then(function(distritos) {
+      res.send(JSON.stringify(distritos));
+    }).catch((err) => {
+      var rpta = {
+        'tipo_mensaje': 'error',
+        'mensaje': [
+          'Se ha producido un error en buscar los distritos',
+          err.toString()
+        ]
+      }
+      res.statusCode = 500;
+      res.send(JSON.stringify(rpta));
+    });
 });
