@@ -18,25 +18,47 @@
   </script>
 </head>
 <body class="container">
-  <h1>Autocompletar</h1>
-  <p>Archivos usados:</p>
-  <ul>
-    <li>views/autocomplete.js</li>
-    <li>models/distrito.js</li>
-    <li>assets/css/autocomplete.css</li>
-  </ul>
-  <hr>
-  <div class="col-md-4">
-    <div class="form-group" id="formUbicaciones">
-      <label for="txtDistrito">Nombre de distrito - id: </label>
-      <label id="lblDistritoId" class="sugerencia">E</label>
-      <input type="text" class="form-control" id="txtDistrito" placeholder="Distrito">
-      <ul id="listaDistritos" class="oculto sugerencia-contenedor"></ul>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Autocompletar</h1>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="form-group">
-      <label id="lblMensaje"></label>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Archivos JS</p>
+      <ul>
+        <li>views/autocomplete.js</li>
+        <li>models/distrito.js</li>
+        <li>collections/distritos.js</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <p>Archivos CSS</p>
+      <ul>
+        <li>assets/css/autocomplete.css</li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <div class="row" id="formUbicaciones">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="txtDistrito">Nombre de distrito - id: </label>
+        <label id="lblDistritoId" class="sugerencia">E</label>
+        <input type="text" class="form-control" id="txtDistrito" placeholder="Distrito">
+        <ul id="listaDistritos" class="oculto sugerencia-contenedor"></ul>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label id="lblMensaje"></label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group" id="formUbicaciones">
+        <label for="txtDistrito">Ver modelo de selcción en consola</label><br>
+        <button type="button" class="btn btn-default" id="verModelo"><i class="fa fa-search" aria-hidden="true"></i>Ver Modelo</button>
+      </div>
     </div>
   </div>
   <!-- Librerías de Terceros-->
@@ -51,12 +73,15 @@
   <!-- JS del footer -->
   <script type="text/javascript">
     new AutocompleteView({
+      el: "#formUbicaciones",
       id: "lblDistritoId",
       nombre: "txtDistrito",
       targetMensajeError: "lblMensaje",
       targetSugerencias: "listaDistritos",
       mensajeError: "Ha ocurrido un error al buscar los distritos",
-      collection: new DistritosCollection()
+      url: BASE_URL + "distrito/buscar",
+      collection: new DistritosCollection(),
+      model: new Distrito(),
     });
   </script>
 </body>
