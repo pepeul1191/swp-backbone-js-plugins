@@ -3,34 +3,61 @@
 <head>
   <meta charset="utf-8">
   <title>Demos</title>
+  <link rel="../assets/img/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Librerías de Terceros-->
   <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <!-- CSS Propio -->
+  <link href="../assets/css/styles.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/autocomplete.css" rel="stylesheet" type="text/css"/>
+  <!-- JS de cabecera -->
+  <script type="text/javascript">
+    const BASE_URL = "http://localhost:9090/";
+    const CSRF = "";
+  </script>
 </head>
 <body class="container">
   <h1>Autocompletar</h1>
-  <p>Archivos a usar:</p>
+  <p>Archivos usados:</p>
   <ul>
     <li>views/autocomplete.js</li>
     <li>models/distrito.js</li>
+    <li>assets/css/autocomplete.css</li>
   </ul>
   <hr>
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="form-group" id="formUbicaciones">
-      <label for="exampleInputEmail1">Nombre de distrito - id: </label><label id="lblDistritoId">E</label>
+      <label for="txtDistrito">Nombre de distrito - id: </label>
+      <label id="lblDistritoId" class="sugerencia">E</label>
       <input type="text" class="form-control" id="txtDistrito" placeholder="Distrito">
+      <ul id="listaDistritos" class="oculto sugerencia-contenedor"></ul>
     </div>
   </div>
+  <div class="col-md-3">
+    <div class="form-group">
+      <label id="lblMensaje"></label>
+    </div>
+  </div>
+  <!-- Librerías de Terceros-->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
   <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
+  <!-- JS Propio -->
   <script type="text/javascript" src="../models/distrito.js"></script>
+  <script type="text/javascript" src="../collections/distritos.js"></script>
   <script type="text/javascript" src="../views/autocomplete.js"></script>
+  <!-- JS del footer -->
   <script type="text/javascript">
-    const BASE_URL = "http://localhost:9090/";
-    const CSRF = "";
-    var modelo = new Distrito();
-    new AutocompleteView({id: 'lblDistritoId', nombre: 'txtDistrito', modelo: modelo});
+    new AutocompleteView({
+      id: "lblDistritoId",
+      nombre: "txtDistrito",
+      targetMensajeError: "lblMensaje",
+      targetSugerencias: "listaDistritos",
+      mensajeError: "Ha ocurrido un error al buscar los distritos",
+      collection: new DistritosCollection()
+    });
   </script>
 </body>
 </html>

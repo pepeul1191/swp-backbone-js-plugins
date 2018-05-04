@@ -1,0 +1,48 @@
+body{font-size: 12px}
+.icono-brand{margin-right: 5px}
+.navbar-brand{padding: 10px; height: 40px;}
+.navbar {margin-bottom: 10px; height: 40px; min-height: 41px;}
+.navbar-toggle{padding: 8px 8px; margin-right: 10px; margin-top: 5px;}
+.navbar-default .navbar-collapse{border: 0px; background: #FDFDFD; border-bottom: 1px solid #e7e7e7;}
+.color-rojo{color:#a94442;}
+.color-warning{color: #8a6d3b;}
+.color-success{color: #3c763d;}
+.oculto{display: none}
+label{font-weight: 500;}
+button>i{margin-right: 5px}
+.modal-body {padding-left: 35px; padding-right: 35px; padding-top: 0px;}
+@media (min-width: 768px){
+	.navbar-nav>li>a {padding-top: 10px; padding-bottom: 10px;}
+	.navbar {border-radius: 0px;}
+}
+@media (min-width: 1200px){
+	.container{width: 100%;}
+}
+.btn{border-radius: 0px}
+.btn-file{margin-right: 10px; margin-bottom: 10px}
+.oculto{display: none !important}
+.modal-content{border-radius: 0px;}
+.container, .container-fluid { padding-left: 10px;}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{    padding-right: 15px;
+    padding-left: 0px;}
+.list-group-item{padding: 8px 10px;}
+.list-group-item:first-child { border-top-left-radius: 0px; border-top-right-radius: 0px;}
+.list-group-item-subtitulo{background: #FDFDFD}
+.list-group-item-item{padding-left: 12px}
+.list-group-item-item > a > i{padding-right: 5px}
+.panel-default>.panel-heading {color: #333;background-color: #FDFDFD;border-radius: 0px}
+footer.nb-footer .copyright { margin-top: 15px; background: #111; padding: 7px 0; color: #343434; }
+footer.nb-footer .copyright p { margin: 0; padding: 0; padding-left: 10px;}
+
+.boton-tabla, .btn-default{color: #343434 !important;background-color: #f8f8f8 !important;border-color: #ccc !important; border-radius: 0px; padding:5px; font-size: 11px;
+    border-radius: 0px;}
+.boton-tabla:hover, .btn-default:hover{color: #343434 !important; background-color: #e7e7e7!important;border-color: #ccc !important; font-size: 11px; border-radius: 0px; padding:5px;}
+.form-control { font-size: 11px; border-radius: 0px; height: 27px;}
+.ui-datepicker { background: white; border: 1px solid #ccc;}
+.ui-timepicker-container{z-index: 2000 !important}
+.texto-der{float: right;}
+.modal-evento-previsualizar{max-width: 600px}
+.hr-modal-evento-previsualizar{ margin-top: 0px; margin-bottom: 0px; }
+.modal-header { margin-bottom: 20px;}
+
+.mensaje-full-width{width: 100%; text-align: right;}
