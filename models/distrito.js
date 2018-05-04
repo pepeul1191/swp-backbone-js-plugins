@@ -6,6 +6,6 @@ var Distrito = Backbone.Model.extend({
   initialize: function() {
   },
   toString: function(){
-    return "Distiro { id: " +  this.get("id") + " - " + "nombre: " + this.get("nombre") + " }";
+    return "Distiro { id: " +  this.get("id") + " - " + "nombre: '" + this.get("nombre") + "' }";
   },
 });
