@@ -12,6 +12,10 @@ Arrancar aplicación servidor:
 
     $ npm start
 
+Para corregir el error ENOSPC en caso de presentarse:
+
+    $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
 ---
 
 Fuentes:
@@ -23,3 +27,5 @@ Fuentes:
 + https://cdnjs.com/libraries/backbone.js/tutorials/what-is-a-model
 + https://stackoverflow.com/questions/16533440/backbone-js-iterate-a-collection?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 + https://coursework.vschool.io/testing-javascript-with-jasmine/
++ https://www.npmjs.com/package/express-fileupload
++ https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa

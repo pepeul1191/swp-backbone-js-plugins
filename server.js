@@ -2,6 +2,17 @@
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+// funciones helper
+function makeId() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 20; i++){
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
 // modules de la base de datos
 const Sequelize = require('sequelize');
 // conexión a la base de datos
@@ -66,6 +77,8 @@ app.use(function (req, res, next) {
   res.set('Access-Control-Allow-Origin', '*');
   return next();
 });
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(fileUpload());
 app.use(express.static(path.join(__dirname, '')));
 app.listen(9090);
 console.log('Listening on port 9090');
@@ -109,4 +122,16 @@ app.get('/distrito/buscar', function (req, res) {
       res.statusCode = 500;
       res.send(JSON.stringify(rpta));
     });
+});
+app.post('/archivo/subir',  bodyParser.text({ type: 'json' }), function (req, res) {
+  var key1 = req.body.key1;
+  var key2 = req.body.key2;
+  let sampleFile = req.files.myFile;
+  var tempFileNameArray = sampleFile.name.split(".");
+  sampleFile.mv('uploads/' + makeId() + '.' + tempFileNameArray[tempFileNameArray.length - 1], function(err) {
+    if (err){
+      return res.status(500).send(err);
+    }
+    res.send('File uploaded!');
+  });
 });

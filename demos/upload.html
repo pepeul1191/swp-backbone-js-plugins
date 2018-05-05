@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Upload</title>
+  <link rel="../assets/img/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Librerías de Terceros-->
+  <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <!-- CSS Propio -->
+  <link href="../assets/css/styles.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/autocomplete.css" rel="stylesheet" type="text/css"/>
+  <!-- JS de cabecera -->
+  <script type="text/javascript">
+    const BASE_URL = "http://localhost:9090/";
+    const CSRF = "";
+  </script>
+</head>
+<body class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Upload</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Archivos JS</p>
+      <ul>
+        <li>views/upload.js</li>
+        <li>models/archivo.js</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <p>Archivos CSS</p>
+      <ul>
+        <li>assets/css/upload.css</li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <div class="row" id="formUpload">
+    <div class="col-md-4">
+      <div class="form-group" style="margin-bottom:10px">
+        <label for="txtExtraData1">Data Extra 1</label>
+        <input type="input" class="form-control" id="txtExtraData1" placeholder="Datos Extra 1">
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label for="txtExtraData2">Data Extra 2</label>
+        <input type="input" class="form-control" id="txtExtraData2" placeholder="Datos Extra 2">
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label style="width:100%">Foto</label>
+        <label id="imagen_id" class="oculto">E</label>
+        <input type="file" id="input_file" name="myFile" type="file" class=""/>
+        <button id="buscar_file" class="btn btn-default btn-file pull-left"><i class="fa fa-file-image-o" aria-hidden="true"></i>Buscar </button>
+        <button id="subir_file" class="btn btn-default btn-file pull-left"><i class="fa fa-upload" aria-hidden="true"></i>Subir </button>
+        <a href=""  target="_blank" id="ver_file" class="btn btn-default btn-file pull-left"><i class="fa fa-search" aria-hidden="true" style="margin-right: 5px"></i>Ver </a>
+        <button type="button" class="btn btn-default" id="btnAsociarImagen"><i class="fa fa-check" aria-hidden="true"></i>Asociar Imagen</button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label id="lblMensaje"></label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group" id="formUbicaciones">
+        <label for="txtDistrito">Ver modelo de selcción en consola</label><br>
+        <button type="button" class="btn btn-default" id="verModelo"><i class="fa fa-search" aria-hidden="true"></i>Ver Modelo</button>
+      </div>
+    </div>
+  </div>
+  <!-- Librerías de Terceros-->
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
+  <!-- JS Propio -->
+  <script type="text/javascript" src="../models/archivo.js"></script>
+  <script type="text/javascript" src="../views/upload.js"></script>
+  <!-- JS del footer -->
+  <script type="text/javascript">
+    new UploadView({
+      el: "#formUpload",
+      imagenId: "imagen_id",
+      inputFileId: "input_file",
+      buscarBtnId: "buscar_file",
+      subirBtnId: "subir_file",
+      verBtnId: "ver_file",
+      fileName: "myFile",
+      lblMensaje: "lblMensaje",
+      mensajes: {
+        "formatoNoValido": "Archivo formato no válido",
+        "tamanioNoValido": "Tamaño de archivo no válido",
+        "errorAjax": "Error de comunicación con el servidor",
+      },
+      url: BASE_URL + "archivo/subir",
+      extraData: [
+        {"llave": "key1", "domId": "txtExtraData1"},
+        {"llave": "key2", "domId": "txtExtraData2"},
+      ],
+      maxSize: 254585, //bytes
+      allowTypes: ["image/png", "image/jpeg"],
+      model: new Archivo(),
+    });
+  </script>
+</body>
+</html>
