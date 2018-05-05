@@ -52,11 +52,10 @@
       <div class="form-group" style="margin-bottom:10px">
         <label style="width:100%">Foto</label>
         <label id="imagen_id" class="oculto">E</label>
-        <input type="file" id="input_file" name="myFile" type="file" class=""/>
+        <input type="file" id="input_file" name="myFile" type="file" class="oculto"/>
         <button id="buscar_file" class="btn btn-default btn-file pull-left"><i class="fa fa-file-image-o" aria-hidden="true"></i>Buscar </button>
-        <button id="subir_file" class="btn btn-default btn-file pull-left"><i class="fa fa-upload" aria-hidden="true"></i>Subir </button>
-        <a href=""  target="_blank" id="ver_file" class="btn btn-default btn-file pull-left"><i class="fa fa-search" aria-hidden="true" style="margin-right: 5px"></i>Ver </a>
-        <button type="button" class="btn btn-default" id="btnAsociarImagen"><i class="fa fa-check" aria-hidden="true"></i>Asociar Imagen</button>
+        <button id="subir_file" class="btn btn-default btn-file pull-left" disabled><i class="fa fa-upload" aria-hidden="true"></i>Subir </button>
+        <a target="_blank" id="ver_file" class="btn btn-default btn-file pull-left" disabled><i class="fa fa-search" aria-hidden="true" style="margin-right: 5px"></i>Ver </a>
       </div>
     </div>
     <div class="col-md-3">
@@ -94,13 +93,14 @@
         "formatoNoValido": "Archivo formato no válido",
         "tamanioNoValido": "Tamaño de archivo no válido",
         "errorAjax": "Error de comunicación con el servidor",
+        "success": "Se cargado el archivo",
       },
       url: BASE_URL + "archivo/subir",
       extraData: [
         {"llave": "key1", "domId": "txtExtraData1"},
         {"llave": "key2", "domId": "txtExtraData2"},
       ],
-      maxSize: 254585, //bytes
+      maxSize: 3545850, //bytes
       allowTypes: ["image/png", "image/jpeg"],
       model: new Archivo(),
     });

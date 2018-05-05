@@ -4,6 +4,7 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const base_url = 'http://localhost:9090/';
 // funciones helper
 function makeId() {
   var text = "";
@@ -128,10 +129,20 @@ app.post('/archivo/subir',  bodyParser.text({ type: 'json' }), function (req, re
   var key2 = req.body.key2;
   let sampleFile = req.files.myFile;
   var tempFileNameArray = sampleFile.name.split(".");
-  sampleFile.mv('uploads/' + makeId() + '.' + tempFileNameArray[tempFileNameArray.length - 1], function(err) {
+  var randomVal = makeId();
+  sampleFile.mv('uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1], function(err) {
     if (err){
-      return res.status(500).send(err);
+      res.statusCode = 500;
+      res.send(err);
     }
-    res.send('File uploaded!');
+    var rpta = {
+      'tipo_mensaje': 'success',
+      'mensaje': [
+        'Se ha registrado una nueva imagen', // mensaje
+        randomVal, // imagenId
+        base_url + 'uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1], // url imagen
+      ]
+    };
+    res.send(JSON.stringify(rpta));
   });
 });

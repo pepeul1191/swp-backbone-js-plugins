@@ -27,6 +27,7 @@ var UploadView = Backbone.View.extend({
   },
   triggerInputFile: function() {
     $("#" + this.inputFileId).trigger("click");
+		$("#" + this.subirBtnId).prop("disabled", false);
   },
 	verModelo: function(event){
 		console.log(this.model.toString());
@@ -63,10 +64,17 @@ var UploadView = Backbone.View.extend({
 		      processData: false,
 		      beforeSend: function() {
 		        $("#" + viewInstance.subirBtnId).attr("disabled", "true");
+						$("#" + viewInstance.lblMensaje).html("Subiendo");
 		      },
 		      success: function(data) {
-		        console.log(data);
+		        var data = JSON.parse(data);
+						$("#" + viewInstance.lblMensaje).html(viewInstance.mensajes["success"]);
 		        $("#" + viewInstance.subirBtnId).removeAttr("disabled");
+						$("#" + viewInstance.verBtnId).attr("href", data["mensaje"][2]);
+						$("#" + viewInstance.lblMensaje).removeClass("color-rojo");
+						$("#" + viewInstance.lblMensaje).removeClass("color-warning");
+						$("#" + viewInstance.lblMensaje).addClass("color-success");
+						$("#" + viewInstance.verBtnId).attr("disabled", false);
 		      },
 		      error: function(error) {
 		        console.log(error);
