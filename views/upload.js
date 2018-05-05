@@ -75,6 +75,13 @@ var UploadView = Backbone.View.extend({
 						$("#" + viewInstance.lblMensaje).removeClass("color-warning");
 						$("#" + viewInstance.lblMensaje).addClass("color-success");
 						$("#" + viewInstance.verBtnId).attr("disabled", false);
+						// setear modelo
+						viewInstance.model.set("id", data["mensaje"][1]);
+						for(var i = 0; i < viewInstance.extraData.length; i++){
+							var extra_data = viewInstance.model.get("extra_data");
+							extra_data[viewInstance.extraData[i]["llave"]] = $("#" + viewInstance.extraData[i]["domId"]).val();
+				      viewInstance.model.set("extra_data", extra_data);
+				    }
 		      },
 		      error: function(error) {
 		        console.log(error);
