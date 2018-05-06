@@ -15,9 +15,9 @@ button>i{margin-right: 5px}
 	.navbar-nav>li>a {padding-top: 10px; padding-bottom: 10px;}
 	.navbar {border-radius: 0px;}
 }
-@media (min-width: 1200px){
+/*@media (min-width: 1200px){
 	.container{width: 100%;}
-}
+}*/
 .btn{border-radius: 0px}
 .btn-file{margin-right: 10px; margin-bottom: 10px}
 .oculto{display: none !important}

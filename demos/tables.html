@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tablas</title>
+  <link rel="../assets/img/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Librerías de Terceros-->
+  <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <!-- CSS Propio -->
+  <link href="../assets/css/styles.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/table.css" rel="stylesheet" type="text/css"/>
+  <!-- JS de cabecera -->
+  <script type="text/javascript">
+    const BASE_URL = "http://localhost:9090/";
+    const CSRF = "";
+  </script>
+</head>
+<body class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Tablas</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Archivos JS</p>
+      <ul>
+        <li>views/table.js</li>
+        <li>models/departamento.js</li>
+        <li>collections/departamentos.js</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <p>Archivos CSS</p>
+      <ul>
+        <li>assets/css/table.css</li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4" id="formTable">
+      <h5 class="subtitulo" style="margin-bottom:15px">Departamentos</h5>
+      <label class="texto-der oculto" id="mensajeRpta"></label>
+      <table class="list issues" style="" id="tablaDepatartamento">
+        <thead>
+          <th style="width: 10px; display:none;">id</th>
+          <th style="width: 250px;">Nombre</th>
+          <th style="width: 80px;">Botones</th>
+        </thead>
+        <tbody id="tablaDepatartamentoBody">
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="1000" style="text-align:right">
+              <a href="#/evento/crear" class="btn boton-tabla  mootools" objeto="tablaEvento"> <i class="fa fa-plus" style="margin-right:5px"></i>Agregar Registro</a>
+              <button class="btn boton-tabla  mootools" operacion="GuardarTabla" objeto="tablaEvento"> <i class="fa fa-check" style="margin-right:5px"></i>Guardar Cambios</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <!-- Librerías de Terceros-->
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
+  <!-- JS Propio -->
+  <script type="text/javascript" src="../models/departamento.js"></script>
+  <script type="text/javascript" src="../collections/departamentos.js"></script>
+  <script type="text/javascript" src="../views/table.js"></script>
+  <!-- JS del footer -->
+  <script type="text/javascript">
+    var departamentoTable = new TableView({
+      el: "#formTable",
+      idTable: "tablaDepatartamento",
+      targetMensaje: "mensajeRpta",
+      mensajes: {
+        "errorListarAjax": "Error en listar los datos del servidor",
+        "errorGuardarAjax": "Error en guardar los datos en el servidor",
+        "success": "Se cargado guardo los cambios en los departamentos",
+      },
+      urlListar: BASE_URL + "departamento/listar",
+      urlGuardar: BASE_URL + "departamento/guardar",
+      fila: {
+        id: { // llave de REST
+          tipo: "label_id",
+          estilos: "color: blue; display:none",
+          edicion: false,
+        },
+        nombre: { // llave de REST
+          tipo: "text",
+          estilos: "width:70px;",
+          edicion: true,
+        },
+      },
+      collection: new DepartamentosCollection(),
+      model: "Departamento",
+    });
+    departamentoTable.listar();
+  </script>
+</body>
+</html>

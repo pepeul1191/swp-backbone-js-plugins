@@ -84,6 +84,23 @@ app.use(express.static(path.join(__dirname, '')));
 app.listen(9090);
 console.log('Listening on port 9090');
 // rutas rest
+app.get('/departamento/listar', function (req, res) {
+  Departamento.findAll({
+    attributes: ['id', 'nombre'],
+  }).then(function(departamentos) {
+    res.send(JSON.stringify(departamentos));
+  }).catch((err) => {
+    var rpta = {
+      'tipo_mensaje': 'error',
+      'mensaje': [
+        'Se ha producido un error en listar los departamentos',
+        err.toString()
+      ]
+    }
+    res.statusCode = 500;
+    res.send(JSON.stringify(rpta));
+  });
+});
 app.get('/tipo_estacion/listar', function (req, res) {
   TipoEstacion.findAll({
     attributes: ['id', 'nombre'],
