@@ -20,6 +20,7 @@ var TableView = Backbone.View.extend({
 	},
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
+		"keyup input.text": "inputTextEscribir",
   },
   listar: function(){
     this.collection.reset();
@@ -64,10 +65,11 @@ var TableView = Backbone.View.extend({
   },
   helper: function(params){
     return {
-      "label_id": function(params){
+      "td_id": function(params){
 				//console.log("LABEL_ID");
         var nodeTd = document.createElement("td");
         nodeTd.setAttribute("style", params.fila.estilos);
+				nodeTd.setAttribute("key", params.key);
         nodeTd.innerHTML = params.modelo.get(params.key);
         //console.log(nodeTd);
 				return nodeTd;
@@ -77,10 +79,15 @@ var TableView = Backbone.View.extend({
       },
 			"text": function(params){
 				//console.log("LABEL_ID");
-        var nodeTd = document.createElement("td");
-        nodeTd.setAttribute("style", params.fila.estilos);
-        nodeTd.innerHTML = params.modelo.get(params.key);
-        //console.log(nodeTd);
+				var nodeTd = document.createElement("td");
+        var nodeInput = document.createElement("INPUT");
+				nodeInput.setAttribute("type", "text");
+        nodeInput.setAttribute("style", params.fila.estilos);
+				nodeInput.setAttribute("key", params.key);
+        nodeInput.value = params.modelo.get(params.key);
+				nodeInput.classList.add("text");
+				nodeTd.appendChild(nodeInput);
+        //console.log(nodeInput);
 				return nodeTd;
       },
       "btn-td": function(params){
@@ -90,5 +97,13 @@ var TableView = Backbone.View.extend({
   },
 	verModelo: function(event){
 		console.log(this.model.toString());
+	},
+	inputTextEscribir: function(event){
+		var idFila = $(event.target).parent().parent().children(0).html();
+		var valorInput = $(event.target).val();
+		var key = $(event.target).attr("key");
+		var modelo = this.collection.get(idFila);
+		modelo.set(key, valorInput);
+		//thisDOM.parent().parent().children(0).children(0).html();
 	},
 });

@@ -24,3 +24,5 @@ tfoot>tr>td{padding-top: 5px;}
 table.list td { text-align: left; padding-left: 10px;}
 table.list th { text-align: left; padding-left: 10px;}
 input[type="checkbox"]:hover{cursor: pointer;}
+
+table>tbody>tr>td>input[type="text"]{width: 100%; border: 0px;}
