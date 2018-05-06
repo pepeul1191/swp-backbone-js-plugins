@@ -22,6 +22,7 @@ var TableView = Backbone.View.extend({
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
 		"keyup input.text": "inputTextEscribir",
+		"click i.quitar-fila": "quitarFila",
   },
   listar: function(){
     this.collection.reset();
@@ -113,6 +114,8 @@ var TableView = Backbone.View.extend({
 							htmlI.classList.add("fa");
 							htmlI.classList.add(params.filaBotones[i].clase);
 							htmlI.setAttribute("style", params.filaBotones[i].estilos);
+							// operación a la que se le asignará un evento
+							htmlI.classList.add("quitar-fila");
 							boton = htmlI;
 							break;
 						case "href":
@@ -135,11 +138,20 @@ var TableView = Backbone.View.extend({
 		console.log(this.model.toString());
 	},
 	inputTextEscribir: function(event){
-		var idFila = $(event.target).parent().parent().children(0).html();
+		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
 		var valorInput = $(event.target).val();
 		var key = $(event.target).attr("key");
 		var modelo = this.collection.get(idFila);
 		modelo.set(key, valorInput);
+		console.log(modelo);
 		//thisDOM.parent().parent().children(0).children(0).html();
+	},
+	quitarFila: function(event){
+		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
+		var tbody = event.target.parentElement.parentElement.parentElement;
+		var td = event.target.parentElement.parentElement;
+		tbody.removeChild(td);
+		var modelo = this.collection.get(idFila);
+		console.log(modelo);
 	},
 });
