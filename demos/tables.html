@@ -44,14 +44,14 @@
     <div class="col-md-4" id="formTable">
       <h5 class="subtitulo" style="margin-bottom:15px">Departamentos</h5>
       <label class="texto-der oculto" id="mensajeRpta"></label>
-      <table class="list issues" style="" id="tablaDepatartamento">
+      <table class="table table-striped" style="" id="tablaDepatartamento">
         <thead>
-          <th style="width: 10px; display:none;">id</th>
-          <th style="width: 250px;">Nombre</th>
-          <th style="width: 80px;">Botones</th>
+          <tr>
+            <th style="width: 10px; display:none;">id</th>
+            <th style="width: 250px;">Nombre</th>
+            <th style="width: 80px;">Botones</th>
+          </tr>
         </thead>
-        <tbody id="tablaDepatartamentoBody">
-        </tbody>
         <tfoot>
           <tr>
             <td colspan="1000" style="text-align:right">
@@ -79,9 +79,9 @@
       idTable: "tablaDepatartamento",
       targetMensaje: "mensajeRpta",
       mensajes: {
-        "errorListarAjax": "Error en listar los datos del servidor",
-        "errorGuardarAjax": "Error en guardar los datos en el servidor",
-        "success": "Se cargado guardo los cambios en los departamentos",
+        errorListarAjax: "Error en listar los datos del servidor",
+        errorGuardarAjax: "Error en guardar los datos en el servidor",
+        success: "Se cargado guardo los cambios en los departamentos",
       },
       urlListar: BASE_URL + "departamento/listar",
       urlGuardar: BASE_URL + "departamento/guardar",
@@ -93,10 +93,21 @@
         },
         nombre: { // llave de REST
           tipo: "text",
-          estilos: "",
+          estilos: "width: 250px;",
           edicion: true,
         },
+        filaBotones: {
+          estilos: "width: 80px"
+        },
       },
+      filaBotones: [
+        {
+          tipo: "i",
+          operacion:"QuitarFila",
+          clase:"fa-times",
+          estilos:"padding-left: 15px;",
+        },
+      ],
       collection: new DepartamentosCollection(),
       model: "Departamento",
     });

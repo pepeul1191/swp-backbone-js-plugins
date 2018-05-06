@@ -10,6 +10,7 @@ var TableView = Backbone.View.extend({
 		this.urlListar = params["urlListar"];
     this.urlGuardar = params["urlGuardar"];
     this.fila = params["fila"];
+		this.filaBotones = params["filaBotones"];
 		this.model = params["model"];
     this.collection = params["collection"];
     // asignacion dinamica de eventos
@@ -48,11 +49,20 @@ var TableView = Backbone.View.extend({
 						var td = viewInstance.helper()[fila.tipo](params);
 						nodeTr.appendChild(td);
           }
+					// append de botones de la fila
+					var params = {
+						modelo: modelo,
+						filaBotones: viewInstance.filaBotones,
+						estilos: viewInstance.fila.filaBotones.estilos,
+					};
+					var tdBotones = viewInstance.helper()["btn_td"](params);
+					nodeTr.appendChild(tdBotones);
+					// agregar modelo a collection
           viewInstance.collection.add(modelo);
 					nodeTbody.appendChild(nodeTr);
         }
         //console.log(viewInstance.collection);console.log(nodeTbody);
-				document.getElementById(viewInstance.idTableBody).appendChild(nodeTbody);
+				document.getElementById(viewInstance.idTable).appendChild(nodeTbody);
       },
       error: function(error){
         $("#" + viewInstance.targetMensaje).removeClass("color-success");
@@ -90,8 +100,34 @@ var TableView = Backbone.View.extend({
         //console.log(nodeInput);
 				return nodeTd;
       },
-      "btn-td": function(params){
-
+      "btn_td": function(params){
+				//console.log("BTN-TD");
+				var nodeTd = document.createElement("td");
+				nodeTd.setAttribute("style", params.estilos);
+				for(var i = 0; i < params.filaBotones.length; i++){
+					var boton = null;
+					switch(params.filaBotones[i].tipo) {
+						case "i": // de font-awesome 4
+							//<i class="fa fa-chevron-left" aria-hidden="true"></i>
+							var htmlI = document.createElement("i");
+							htmlI.classList.add("fa");
+							htmlI.classList.add(params.filaBotones[i].clase);
+							htmlI.setAttribute("style", params.filaBotones[i].estilos);
+							boton = htmlI;
+							break;
+						case "href":
+							// TODO
+							break;
+						default:
+							console.log("tipo de botón no soportado");
+					}
+					if(boton != null){
+						//console.log(boton);
+						nodeTd.appendChild(boton);
+					}
+				}
+				//console.log(params.modelo);
+				return nodeTd;
       },
     };
   },
