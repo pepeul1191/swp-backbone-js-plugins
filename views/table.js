@@ -13,10 +13,16 @@ var TableView = Backbone.View.extend({
 		this.filaBotones = params["filaBotones"];
 		this.model = params["model"];
     this.collection = params["collection"];
+		this.observador = {
+			nuevo: [],
+			editado: [],
+			eliminado: [],
+		};
     // asignacion dinamica de eventos
     this.events = this.events || {};
     //this.events["keyup #" + this.idNombre] = "buscarCooincidencias";
 		//this.events["focusout #" + this.idNombre] = "limpiarSiVacio";
+		this.listenTo(this.collection, "change", this.onChange, this);
     this.delegateEvents();
 	},
   events: {
@@ -134,16 +140,13 @@ var TableView = Backbone.View.extend({
       },
     };
   },
-	verModelo: function(event){
-		console.log(this.model.toString());
-	},
 	inputTextEscribir: function(event){
 		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
 		var valorInput = $(event.target).val();
 		var key = $(event.target).attr("key");
 		var modelo = this.collection.get(idFila);
+		//console.log("inputTextEscribir");
 		modelo.set(key, valorInput);
-		console.log(modelo);
 		//thisDOM.parent().parent().children(0).children(0).html();
 	},
 	quitarFila: function(event){
@@ -152,6 +155,38 @@ var TableView = Backbone.View.extend({
 		var td = event.target.parentElement.parentElement;
 		tbody.removeChild(td);
 		var modelo = this.collection.get(idFila);
-		console.log(modelo);
+		//console.log(modelo);
+		// si el modelo a editar ya existe como nuevo o editado, eliminar de observador y agregar como eliminado en observador
+		if(_.contains(this.observador.nuevo, (idFila + ""))){
+			this.observador.nuevo = _.without(this.observador.nuevo, (idFila + ""));
+		}
+		if(_.contains(this.observador.editado, (idFila + ""))){
+			this.observador.editado = _.without(this.observador.editado, (idFila + ""));
+		}
+		if(!_.contains(this.observador.eliminado, (idFila + ""))){
+			this.observador.eliminado.push(idFila + "");
+		}
+		this.collection.remove(modelo);
 	},
+	verModelo: function(event){
+		console.log(this.model.toString());
+	},
+	verCollection: function(event){
+		console.log(this.collection);
+	},
+	onChange: function(modeloCambiado) {
+		if(modeloCambiado != null){
+			var idFila = modeloCambiado.get("id") + "";
+			if(idFila.indexOf(this.idTable) >= 0){
+				if(!_.contains(this.observador.nuevo, idFila)){
+					this.observador.nuevo.push(idFila);
+				}
+			}else{
+				if(!_.contains(this.observador.editado, idFila)){
+					this.observador.editado.push(idFila);
+				}
+			}
+			console.log(this.observador);
+		}
+  },
 });
