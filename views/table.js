@@ -29,6 +29,7 @@ var TableView = Backbone.View.extend({
     // se está usando asignacion dinamica de eventos en el constructor
 		"keyup input.text": "inputTextEscribir",
 		"click i.quitar-fila": "quitarFila",
+		"click button.agregar-fila": "agregarFila",
   },
   listar: function(){
     this.collection.reset();
@@ -40,9 +41,9 @@ var TableView = Backbone.View.extend({
       async: false,
       success: function(data){
         var responseData = JSON.parse(data);
-				var nodeTbody = document.createElement("tbody");
+				var tbody = document.createElement("tbody");
         for(var i = 0; i < responseData.length; i++){
-					var nodeTr = document.createElement("tr");
+					var tr = document.createElement("tr");
           var modelo = new window[viewInstance.model](responseData[i]);
           for (var key in responseData[i]) {
             //console.log(key, responseData[i][key]);
@@ -54,7 +55,7 @@ var TableView = Backbone.View.extend({
 							fila: fila,
             };
 						var td = viewInstance.helper()[fila.tipo](params);
-						nodeTr.appendChild(td);
+						tr.appendChild(td);
           }
 					// append de botones de la fila
 					var params = {
@@ -63,13 +64,13 @@ var TableView = Backbone.View.extend({
 						estilos: viewInstance.fila.filaBotones.estilos,
 					};
 					var tdBotones = viewInstance.helper()["btn_td"](params);
-					nodeTr.appendChild(tdBotones);
+					tr.appendChild(tdBotones);
 					// agregar modelo a collection
           viewInstance.collection.add(modelo);
-					nodeTbody.appendChild(nodeTr);
+					tbody.appendChild(tr);
         }
-        //console.log(viewInstance.collection);console.log(nodeTbody);
-				document.getElementById(viewInstance.idTable).appendChild(nodeTbody);
+        //console.log(viewInstance.collection);console.log(tbody);
+				document.getElementById(viewInstance.idTable).appendChild(tbody);
       },
       error: function(error){
         $("#" + viewInstance.targetMensaje).removeClass("color-success");
@@ -84,33 +85,33 @@ var TableView = Backbone.View.extend({
     return {
       "td_id": function(params){
 				//console.log("LABEL_ID");
-        var nodeTd = document.createElement("td");
-        nodeTd.setAttribute("style", params.fila.estilos);
-				nodeTd.setAttribute("key", params.key);
-        nodeTd.innerHTML = params.modelo.get(params.key);
-        //console.log(nodeTd);
-				return nodeTd;
+        var td = document.createElement("td");
+        td.setAttribute("style", params.fila.estilos);
+				td.setAttribute("key", params.key);
+        td.innerHTML = params.modelo.get(params.key);
+        //console.log(td);
+				return td;
       },
       "label": function(params){
         //console.log("LABEL");
       },
 			"text": function(params){
 				//console.log("LABEL_ID");
-				var nodeTd = document.createElement("td");
-        var nodeInput = document.createElement("INPUT");
-				nodeInput.setAttribute("type", "text");
-        nodeInput.setAttribute("style", params.fila.estilos);
-				nodeInput.setAttribute("key", params.key);
-        nodeInput.value = params.modelo.get(params.key);
-				nodeInput.classList.add("text");
-				nodeTd.appendChild(nodeInput);
-        //console.log(nodeInput);
-				return nodeTd;
+				var td = document.createElement("td");
+        var inputText = document.createElement("INPUT");
+				inputText.setAttribute("type", "text");
+        inputText.setAttribute("style", params.fila.estilos);
+				inputText.setAttribute("key", params.key);
+        inputText.value = params.modelo.get(params.key);
+				inputText.classList.add("text");
+				td.appendChild(inputText);
+        //console.log(inputText);
+				return td;
       },
       "btn_td": function(params){
 				//console.log("BTN-TD");
-				var nodeTd = document.createElement("td");
-				nodeTd.setAttribute("style", params.estilos);
+				var td = document.createElement("td");
+				td.setAttribute("style", params.estilos);
 				for(var i = 0; i < params.filaBotones.length; i++){
 					var boton = null;
 					switch(params.filaBotones[i].tipo) {
@@ -132,11 +133,11 @@ var TableView = Backbone.View.extend({
 					}
 					if(boton != null){
 						//console.log(boton);
-						nodeTd.appendChild(boton);
+						td.appendChild(boton);
 					}
 				}
 				//console.log(params.modelo);
-				return nodeTd;
+				return td;
       },
     };
   },
@@ -168,6 +169,36 @@ var TableView = Backbone.View.extend({
 		}
 		this.collection.remove(modelo);
 	},
+	agregarFila: function(event){
+		var tbody = event.target.parentElement.parentElement.parentElement.parentElement.lastChild;
+		var modelo = new window[this.model]({id: this.idTable + _.random(0, 1000)});
+		var tr = document.createElement("tr");
+		for (var key in this.fila) {
+			if(key != "filaBotones"){
+				var fila = this.fila[key];
+				var params = {
+					key: key,
+					modelo: modelo,
+					tdProps: 'XD',
+					fila: fila,
+				};
+				var td = this.helper()[fila.tipo](params);
+				tr.appendChild(td);
+			}else{
+				var params = {
+					modelo: modelo,
+					filaBotones: this.filaBotones,
+					estilos: this.fila.filaBotones.estilos,
+				};
+				var tdBotones = this.helper()["btn_td"](params);
+				tr.appendChild(tdBotones);
+			}
+		}
+		// agregar modelo a collection
+		this.collection.add(modelo);
+		//console.log(tr);console.log(tbody);
+		tbody.appendChild(tr);
+	},
 	verModelo: function(event){
 		console.log(this.model.toString());
 	},
@@ -186,7 +217,7 @@ var TableView = Backbone.View.extend({
 					this.observador.editado.push(idFila);
 				}
 			}
-			console.log(this.observador);
+			//console.log(this.observador);
 		}
   },
 });
