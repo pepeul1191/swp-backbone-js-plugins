@@ -225,7 +225,32 @@ var TableView = Backbone.View.extend({
 			async: false,
 			success: function(data){
 				var responseData = JSON.parse(data);
-				console.log(responseData);
+				if(responseData.tipo_mensaje == "success"){
+					$("#" + viewInstance.targetMensaje).removeClass("color-rojo");
+	        $("#" + viewInstance.targetMensaje).removeClass("color-warning");
+	        $("#" + viewInstance.targetMensaje).addClass("color-success");
+	        $("#" + viewInstance.targetMensaje).html(responseData.mensaje[0]);
+					$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+					//reemplezar los ids de  los nuevos temporales por los generados en la base de datos
+					var idNuevos = responseData.mensaje[1];
+          if(idNuevos != null){
+						for(var p = 0; p < idNuevos.length; p++){
+							var temp = idNuevos[p];
+							var idTemportal = temp.temporal;
+							var idNuevo = temp.nuevo_id;
+							//actualizar id en collection
+							var modelo = viewInstance.collection.get(idTemportal);
+							modelo.set({"id": idNuevo});
+							//actualizar id en DOM de la tabla
+						  var trs = document.getElementById(viewInstance.idTable).lastChild.querySelectorAll('tr');
+							for (var i = 0; i < trs.length; i++) {
+								if(trs[i].firstChild.innerHTML == idTemportal){
+									trs[i].firstChild.innerHTML = idNuevo;
+								}
+							}
+						}
+					}
+				}
 			},
 			error: function(error){
 				$("#" + viewInstance.targetMensaje).removeClass("color-success");

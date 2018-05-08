@@ -2,15 +2,19 @@
 
 Descargas dependencias:
 
-    $ npm install && bower install
+    $ npm install && bower install && bundler install
 
 Crear 'dist' con Gulp:
 
     $ gulp libs
 
-Arrancar aplicación servidor:
+Arrancar aplicación servidor NodeJS:
 
     $ npm start
+
+Arrancar aplicación servidor Ruby:
+
+    $ ruby server.rb
 
 Para corregir el error ENOSPC en caso de presentarse:
 
