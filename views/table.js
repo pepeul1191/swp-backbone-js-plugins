@@ -227,6 +227,9 @@ var TableView = Backbone.View.extend({
 			}
 		}
 		var viewInstance = this;
+		if(this.extraData != null){
+			data.extra = this.extraData
+		}
 		$.ajax({
 			type: "POST",
 			url: viewInstance.urlGuardar,

@@ -21,6 +21,7 @@ var TablaDepatartamentoView = TableView.extend({
     provinciaTable.el.classList.remove("oculto");
     provinciaTable.limpiarBody();
     provinciaTable.listar();
+    provinciaTable.extraData = {departamento_id: departamentoId};
     distritoTable.limpiarBody();
     distritoTable.el.classList.add("oculto");
   },
@@ -44,6 +45,7 @@ var TablaProvinciaView = TableView.extend({
     distritoTable.urlListar = BASE_URL + "distrito/listar/" + provinciaId;
     distritoTable.limpiarBody();
     distritoTable.listar();
+    distritoTable.extraData = {provincia_id: provinciaId};
     distritoTable.el.classList.remove("oculto");
   },
 });
