@@ -30,6 +30,7 @@ var TableView = Backbone.View.extend({
 		"keyup input.text": "inputTextEscribir",
 		"click i.quitar-fila": "quitarFila",
 		"click button.agregar-fila": "agregarFila",
+		"click button.guardar-tabla": "guardarTabla",
   },
   listar: function(){
     this.collection.reset();
@@ -143,8 +144,8 @@ var TableView = Backbone.View.extend({
   },
 	inputTextEscribir: function(event){
 		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
-		var valorInput = $(event.target).val();
-		var key = $(event.target).attr("key");
+		var valorInput = event.target.value;
+		var key = event.target.getAttribute("key");
 		var modelo = this.collection.get(idFila);
 		//console.log("inputTextEscribir");
 		modelo.set(key, valorInput);
@@ -199,11 +200,41 @@ var TableView = Backbone.View.extend({
 		//console.log(tr);console.log(tbody);
 		tbody.appendChild(tr);
 	},
-	verModelo: function(event){
-		console.log(this.model.toString());
-	},
-	verCollection: function(event){
-		console.log(this.collection);
+	guardarTabla: function(event){
+		var data = {
+			nuevos: [],
+			editados: [],
+			eliminados: [],
+		};
+		for (var key in this.observador) {
+			for (var i = 0; i < this.observador[key].length; i++) {
+				var observadorId = this.observador[key][i];
+				if(key == "nuevo" || key == "editado"){
+					var modelo = this.collection.get(observadorId);
+					data[key + "s"].push(modelo.toJSON());
+				}else{
+					data["eliminados"].push(observadorId);
+				}
+			}
+		}
+		var viewInstance = this;
+		$.ajax({
+			type: "POST",
+			url: viewInstance.urlGuardar,
+			data: {csrfmiddlewaretoken: CSRF, data: JSON.stringify(data)},
+			async: false,
+			success: function(data){
+				var responseData = JSON.parse(data);
+				console.log(responseData);
+			},
+			error: function(error){
+				$("#" + viewInstance.targetMensaje).removeClass("color-success");
+				$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+				$("#" + viewInstance.targetMensaje).addClass("color-rojo");
+				$("#" + viewInstance.targetMensaje).html(viewInstance.mensajes["errorGuardarAjax"]);
+				console.log(error);
+			}
+		});
 	},
 	onChange: function(modeloCambiado) {
 		if(modeloCambiado != null){
