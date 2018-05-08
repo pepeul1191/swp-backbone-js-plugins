@@ -65,11 +65,12 @@
           <span>Dom</span>
         </div>
         <div class="vcal-body" data-calendar-area="month" id="bodyCadelndario"></div>
-        <p class="demo-picked">
-          Date picked:
-          <span data-calendar-label="picked"></span>
-        </p>
       </div>
+      <br>
+      <p class="demo-picked">
+        Date picked:
+        <span data-calendar-label="picked" id="targetSeleccion"></span>
+      </p>
     </div>
   </div>
   <!-- Librerías de Terceros-->
@@ -91,6 +92,7 @@
       next: "btnAdelante",
       previous: "btnAtras",
       label: "lblMes",
+      targetSeleccion: "targetSeleccion",
       activeDates: null,
       date: new Date(),
       todaysDate: false,

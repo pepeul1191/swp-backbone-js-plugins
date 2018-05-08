@@ -6,6 +6,7 @@ var CalendarView = Backbone.View.extend({
     this.next = params["next"];
     this.previous = params["previous"];
     this.label = document.getElementById(params["label"]);
+    this.targetSeleccion = document.getElementById(params["targetSeleccion"]);
     this.meses = params["meses"];
     this.disablePastDays = params["disablePastDays"];
     this.disabledClick = params["disabledClick"];
@@ -39,6 +40,7 @@ var CalendarView = Backbone.View.extend({
         target = event.target;
       }
       var diaSeleccion = target.getAttribute("data-calendar-date");
+      this.targetSeleccion.innerHTML = diaSeleccion;
       if (target.classList.contains('vcal-date--selected')) {
         target.classList.remove('vcal-date--selected');
         var viewCollection = this.collection;
