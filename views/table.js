@@ -232,6 +232,7 @@ var TableView = Backbone.View.extend({
 				$("#" + viewInstance.targetMensaje).removeClass("color-warning");
 				$("#" + viewInstance.targetMensaje).addClass("color-rojo");
 				$("#" + viewInstance.targetMensaje).html(viewInstance.mensajes["errorGuardarAjax"]);
+				$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
 				console.log(error);
 			}
 		});

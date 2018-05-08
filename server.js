@@ -4,6 +4,7 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const async = require('async');
 const base_url = 'http://localhost:9090/';
 // funciones helper
 function makeId() {
@@ -160,6 +161,76 @@ app.post('/archivo/subir',  bodyParser.text({ type: 'json' }), function (req, re
         base_url + 'uploads/' + randomVal + '.' + tempFileNameArray[tempFileNameArray.length - 1], // url imagen
       ]
     };
+    res.send(JSON.stringify(rpta));
+  });
+});
+app.post('/departamento/guardar', function (req, res) {
+  var data = JSON.parse(req.body.data);
+  var nuevos = data['nuevos'];
+  var editados = data['editados'];
+  var eliminados = data['eliminados'];
+  var array_nuevos = [];
+  return db.transaction(function (t) {
+    var promises = [];
+    eliminados.forEach(function(eliminado) {
+      Departamento.destroy({
+        where: {id: eliminado}
+      }, {transaction: t})
+      .error(function(err){
+        return err;
+      });
+    });
+    editados.forEach(function(editado) {
+      Departamento.update({
+        nombres: editado['nombre']
+      }, {
+        where: {id: editado['id']}
+      }, {transaction: t})
+      .error(function(err){
+        console.log(err);
+        return err;
+      });
+    });
+    nuevos.forEach(function(nuevo) {
+      var newPromises = Departamento.create({
+        nombre: nuevo['nombre']
+      }, {transaction: t});
+        promises.push(newPromises);
+     }).error(function(err){
+       return err;
+     });
+    return Promise.all(promises).then(function(nuevos_promises) {
+      var promises = [];
+      var i = 0;
+      nuevos_promises.forEach(function(promise){
+        var temp = {
+          'temporal': nuevos[i]['id'] ,
+          'nuevo_id': promise['id']
+        };
+        promises.push(temp);
+        i = i + 1;
+      });
+      return Promise.all(promises);
+    });
+  }).then(function (result) {
+    var rpta = {
+      'tipo_mensaje': 'success',
+      'mensaje': [
+        'Se ha registrado los cambios en los departamentos', result
+      ]
+    };
+    //t.commit();
+    res.send(JSON.stringify(rpta));
+  }).catch(function (err) {
+    var rpta = {
+      'tipo_mensaje': 'error',
+      'mensaje': [
+        'Se ha producido un error en guardar los departamentos',
+        err.toString()
+      ]
+    }
+    //t.rollback();
+    res.statusCode = 500;
     res.send(JSON.stringify(rpta));
   });
 });
