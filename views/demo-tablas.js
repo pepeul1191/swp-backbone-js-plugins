@@ -1,18 +1,14 @@
 var TablaDepatartamentoView = TableView.extend({
   initialize: function(options){
+    // herencia de atributos, móetodos y eventos
     TableView.prototype.initialize.apply(this, [options])
-    // asignacion dinamica de eventos
-    this.events = this.events || {};
-    this.listenTo(this.collection, "change", this.onChange, this);
+    this.inheritEvents(TableView);
+    // delegación de eventos
     this.delegateEvents();
   },
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
     "click i.ver-provincia": "verProvincias",
-    "keyup input.text": "inputTextEscribir",
-    "click i.quitar-fila": "quitarFila",
-    "click button.agregar-fila": "agregarFila",
-    "click button.guardar-tabla": "guardarTabla",
   },
   verProvincias: function(event){
     var departamentoId = event.target.parentElement.parentElement.firstChild.innerHTML;
@@ -29,16 +25,15 @@ var TablaDepatartamentoView = TableView.extend({
 
 var TablaProvinciaView = TableView.extend({
   initialize: function(options){
+    // herencia de atributos, móetodos y eventos
     TableView.prototype.initialize.apply(this, [options])
-    this.foo = 'bar';
+    this.inheritEvents(TableView);
+    // delegación de eventos
+    this.delegateEvents();
   },
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
     "click i.ver-distrito": "verDistrito",
-    "keyup input.text": "inputTextEscribir",
-    "click i.quitar-fila": "quitarFila",
-    "click button.agregar-fila": "agregarFila",
-    "click button.guardar-tabla": "guardarTabla",
   },
   verDistrito: function(event){
     var provinciaId = event.target.parentElement.parentElement.firstChild.innerHTML;

@@ -32,6 +32,15 @@ var TableView = Backbone.View.extend({
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
   },
+	//método que permite la herencia de eventos
+	inheritEvents: function(parent) {
+    var parentEvents = parent.prototype.events;
+    if (_.isFunction(parentEvents)) {
+      parentEvents = parentEvents();
+    }
+    this.events = _.extend({}, parentEvents, this.events);
+  },
+	// métodos de la vista
 	limpiarBody: function(){
 		var tabla = document.getElementById(this.idTable);
 		var childs = tabla.childNodes;
