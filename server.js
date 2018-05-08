@@ -92,8 +92,26 @@ app.get('/provincia/listar/:departamentoId', function (req, res) {
     res.send(response.body);
   });
 });
+app.post('/provincia/guardar', function (req, res) {
+  unirest.post(servicio_url + 'provincia/guardar?data=' + req.body.data)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
 app.get('/distrito/listar/:provinciaId', function (req, res) {
   unirest.get(servicio_url + 'distrito/listar/' + req.params.provinciaId)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
+app.post('/distrito/guardar', function (req, res) {
+  unirest.post(servicio_url + 'distrito/guardar?data=' + req.body.data)
   .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
   .send()
   .end(function (response) {

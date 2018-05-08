@@ -3,8 +3,6 @@ var TablaDepatartamentoView = TableView.extend({
     TableView.prototype.initialize.apply(this, [options])
     // asignacion dinamica de eventos
     this.events = this.events || {};
-    //this.events["keyup #" + this.idNombre] = "buscarCooincidencias";
-    //this.events["focusout #" + this.idNombre] = "limpiarSiVacio";
     this.listenTo(this.collection, "change", this.onChange, this);
     this.delegateEvents();
   },
@@ -18,51 +16,13 @@ var TablaDepatartamentoView = TableView.extend({
   },
   verProvincias: function(event){
     var departamentoId = event.target.parentElement.parentElement.firstChild.innerHTML;
-    var provinciaTable = new TablaProvinciaView({
-      el: "#formTableProvincia",
-      idTable: "tablaProvincias",
-      targetMensaje: "mensajeRptaProvincias",
-      mensajes: {
-        errorListarAjax: "Error en listar los datos del servidor",
-        errorGuardarAjax: "Error en guardar los datos en el servidor",
-        success: "Se cargado guardo los cambios en las provincas",
-      },
-      urlListar: BASE_URL + "provincia/listar/" + departamentoId,
-      urlGuardar: BASE_URL + "provincia/guardar",
-      fila: {
-        id: { // llave de REST
-          tipo: "td_id",
-          estilos: "color: blue; display:none",
-          edicion: false,
-        },
-        nombre: { // llave de REST
-          tipo: "text",
-          estilos: "width: 250px;",
-          edicion: true,
-        },
-        filaBotones: {
-          estilos: "width: 80px"
-        },
-      },
-      filaBotones: [
-        {
-          tipo: "i",
-          claseOperacion: "ver-distrito",
-          clase: "fa-list",
-          estilos: "padding-left: 5px;",
-        },
-        {
-          tipo: "i",
-          claseOperacion: "quitar-fila",
-          clase: "fa-times",
-          estilos: "padding-left: 10px;",
-        },
-      ],
-      collection: new ProvinciasCollection(),
-      model: "Provincia",
-    });
+    //urlListar: BASE_URL + "provincia/listar/" + departamentoId,
+    provinciaTable.urlListar = BASE_URL + "provincia/listar/" + departamentoId;
+    provinciaTable.el.classList.remove("oculto");
     provinciaTable.limpiarBody();
     provinciaTable.listar();
+    distritoTable.limpiarBody();
+    distritoTable.el.classList.add("oculto");
   },
 });
 
@@ -81,44 +41,9 @@ var TablaProvinciaView = TableView.extend({
   },
   verDistrito: function(event){
     var provinciaId = event.target.parentElement.parentElement.firstChild.innerHTML;
-    var distritoTable = new TableView({
-      el: "#formTableDistrito",
-      idTable: "tablaDistritos",
-      targetMensaje: "mensajeRptaDistritos",
-      mensajes: {
-        errorListarAjax: "Error en listar los datos del servidor",
-        errorGuardarAjax: "Error en guardar los datos en el servidor",
-        success: "Se cargado guardo los cambios en las provincas",
-      },
-      urlListar: BASE_URL + "distrito/listar/" + provinciaId,
-      urlGuardar: BASE_URL + "distrito/guardar",
-      fila: {
-        id: { // llave de REST
-          tipo: "td_id",
-          estilos: "color: blue; display:none",
-          edicion: false,
-        },
-        nombre: { // llave de REST
-          tipo: "text",
-          estilos: "width: 250px;",
-          edicion: true,
-        },
-        filaBotones: {
-          estilos: "width: 80px"
-        },
-      },
-      filaBotones: [
-        {
-          tipo: "i",
-          claseOperacion: "quitar-fila",
-          clase: "fa-times",
-          estilos: "padding-left: 15px;",
-        },
-      ],
-      collection: new ProvinciasCollection(),
-      model: "Provincia",
-    });
+    distritoTable.urlListar = BASE_URL + "distrito/listar/" + provinciaId;
     distritoTable.limpiarBody();
     distritoTable.listar();
+    distritoTable.el.classList.remove("oculto");
   },
 });

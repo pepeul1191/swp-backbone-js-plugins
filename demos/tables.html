@@ -62,7 +62,7 @@
         </tfoot>
       </table>
     </div>
-    <div class="col-md-4" id="formTableProvincia">
+    <div class="col-md-4 oculto" id="formTableProvincia">
       <h5 class="subtitulo" style="margin-bottom:15px">Provncias</h5>
       <label class="texto-der" id="mensajeRptaProvincias"></label>
       <table class="table table-striped" style="" id="tablaProvincias">
@@ -83,7 +83,7 @@
         </tfoot>
       </table>
     </div>
-    <div class="col-md-4" id="formTableDistrito">
+    <div class="col-md-4 oculto" id="formTableDistrito">
       <h5 class="subtitulo" style="margin-bottom:15px">Distritos</h5>
       <label class="texto-der" id="mensajeRptaDistritos"></label>
       <table class="table table-striped" style="" id="tablaDistritos">
@@ -161,6 +161,86 @@
       ],
       collection: new DepartamentosCollection(),
       model: "Departamento",
+    });
+    var provinciaTable = new TablaProvinciaView({
+      el: "#formTableProvincia",
+      idTable: "tablaProvincias",
+      targetMensaje: "mensajeRptaProvincias",
+      mensajes: {
+        errorListarAjax: "Error en listar los datos del servidor",
+        errorGuardarAjax: "Error en guardar los datos en el servidor",
+        success: "Se cargado guardo los cambios en las provincas",
+      },
+      //urlListar: BASE_URL + "provincia/listar/" + departamentoId,
+      urlGuardar: BASE_URL + "provincia/guardar",
+      fila: {
+        id: { // llave de REST
+          tipo: "td_id",
+          estilos: "color: blue; display:none",
+          edicion: false,
+        },
+        nombre: { // llave de REST
+          tipo: "text",
+          estilos: "width: 250px;",
+          edicion: true,
+        },
+        filaBotones: {
+          estilos: "width: 80px"
+        },
+      },
+      filaBotones: [
+        {
+          tipo: "i",
+          claseOperacion: "ver-distrito",
+          clase: "fa-list",
+          estilos: "padding-left: 5px;",
+        },
+        {
+          tipo: "i",
+          claseOperacion: "quitar-fila",
+          clase: "fa-times",
+          estilos: "padding-left: 10px;",
+        },
+      ],
+      collection: new ProvinciasCollection(),
+      model: "Provincia",
+    });
+    var distritoTable = new TableView({
+      el: "#formTableDistrito",
+      idTable: "tablaDistritos",
+      targetMensaje: "mensajeRptaDistritos",
+      mensajes: {
+        errorListarAjax: "Error en listar los datos del servidor",
+        errorGuardarAjax: "Error en guardar los datos en el servidor",
+        success: "Se cargado guardo los cambios en las provincas",
+      },
+      //urlListar: BASE_URL + "distrito/listar/" + provinciaId,
+      urlGuardar: BASE_URL + "distrito/guardar",
+      fila: {
+        id: { // llave de REST
+          tipo: "td_id",
+          estilos: "color: blue; display:none",
+          edicion: false,
+        },
+        nombre: { // llave de REST
+          tipo: "text",
+          estilos: "width: 250px;",
+          edicion: true,
+        },
+        filaBotones: {
+          estilos: "width: 80px"
+        },
+      },
+      filaBotones: [
+        {
+          tipo: "i",
+          claseOperacion: "quitar-fila",
+          clase: "fa-times",
+          estilos: "padding-left: 15px;",
+        },
+      ],
+      collection: new ProvinciasCollection(),
+      model: "Provincia",
     });
     departamentoTable.listar();
   </script>
