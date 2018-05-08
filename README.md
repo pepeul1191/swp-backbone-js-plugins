@@ -35,3 +35,4 @@ Fuentes:
 + https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 + https://github.com/vanilla-calendar/vanilla-calendar
 + https://github.com/rykdesjardins/js-calendar
++ https://stackoverflow.com/questions/7735133/backbone-js-view-inheritance?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa

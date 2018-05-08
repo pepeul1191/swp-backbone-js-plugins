@@ -32,6 +32,15 @@ var TableView = Backbone.View.extend({
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
   },
+	limpiarBody: function(){
+		var tabla = document.getElementById(this.idTable);
+		var childs = tabla.childNodes;
+		for (var i = 0; i < childs.length; i++) {
+			if(childs[i].nodeName == "TBODY"){
+				tabla.removeChild(childs[i]);
+			}
+		}
+	},
   listar: function(){
     this.collection.reset();
     var viewInstance = this;
@@ -123,7 +132,7 @@ var TableView = Backbone.View.extend({
 							htmlI.classList.add(params.filaBotones[i].clase);
 							htmlI.setAttribute("style", params.filaBotones[i].estilos);
 							// operación a la que se le asignará un evento
-							htmlI.classList.add("quitar-fila");
+							htmlI.classList.add(params.filaBotones[i].claseOperacion);
 							boton = htmlI;
 							break;
 						case "href":

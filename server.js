@@ -31,6 +31,9 @@ app.use(express.static(path.join(__dirname, '')));
 app.listen(9090);
 console.log('Listening on port 9090');
 // rutas rest
+app.get('/', function (req, res) {
+  res.redirect('/demos');
+});
 app.post('/archivo/subir',  bodyParser.text({ type: 'json' }), function (req, res) {
   var key1 = req.body.key1;
   var key2 = req.body.key2;
@@ -73,6 +76,24 @@ app.get('/distrito/buscar', function (req, res) {
 });
 app.post('/departamento/guardar', function (req, res) {
   unirest.post(servicio_url + 'departamento/guardar?data=' + req.body.data)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
+app.get('/provincia/listar/:departamentoId', function (req, res) {
+  unirest.get(servicio_url + 'provincia/listar/' + req.params.departamentoId)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
+app.get('/distrito/listar/:provinciaId', function (req, res) {
+  unirest.get(servicio_url + 'distrito/listar/' + req.params.provinciaId)
   .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
   .send()
   .end(function (response) {
