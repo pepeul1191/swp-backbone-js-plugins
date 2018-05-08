@@ -242,7 +242,7 @@ var TableView = Backbone.View.extend({
 							var modelo = viewInstance.collection.get(idTemportal);
 							modelo.set({"id": idNuevo});
 							//actualizar id en DOM de la tabla
-						  var trs = document.getElementById(viewInstance.idTable).lastChild.querySelectorAll('tr');
+						  var trs = document.getElementById(viewInstance.idTable).lastChild.querySelectorAll("tr");
 							for (var i = 0; i < trs.length; i++) {
 								if(trs[i].firstChild.innerHTML == idTemportal){
 									trs[i].firstChild.innerHTML = idNuevo;
@@ -250,6 +250,7 @@ var TableView = Backbone.View.extend({
 							}
 						}
 					}
+					//resetear el observador
 					viewInstance.observador = {
 						nuevo: [],
 						editado: [],

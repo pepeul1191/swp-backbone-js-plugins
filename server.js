@@ -58,7 +58,7 @@ app.get('/departamento/listar', function (req, res) {
   .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
   .send()
   .end(function (response) {
-    console.log(response.body);
+    //console.log(response.body);
     res.send(response.body);
   });
 });
@@ -67,7 +67,7 @@ app.get('/distrito/buscar', function (req, res) {
   .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
   .send()
   .end(function (response) {
-    console.log(response.body);
+    //console.log(response.body);
     res.send(response.body);
   });
 });
@@ -76,7 +76,7 @@ app.post('/departamento/guardar', function (req, res) {
   .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
   .send()
   .end(function (response) {
-    console.log(response.body);
+    //console.log(response.body);
     res.send(response.body);
   });
 });

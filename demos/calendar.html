@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Calendario</title>
+  <link rel="../assets/img/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Librerías de Terceros-->
+  <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <!-- CSS Propio -->
+  <link href="../assets/css/styles.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/calendar.css" rel="stylesheet" type="text/css"/>
+  <!-- JS de cabecera -->
+  <script type="text/javascript">
+    const BASE_URL = "http://localhost:9090/";
+    const CSRF = "";
+  </script>
+</head>
+<body class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Calendario</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>Archivos JS</p>
+      <ul>
+        <li>views/calendar.js</li>
+        <li>models/calendario.js</li>
+        <li>collections/calendarios.js</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <p>Archivos CSS</p>
+      <ul>
+        <li>assets/css/calendar.css</li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4" id="formCalendario">
+      <h5 class="subtitulo" style="margin-bottom:15px">Calendario</h5>
+      <div id="calendarioDemo" class="v-cal">
+        <div class="vcal-header">
+          <button class="vcal-btn" data-calendar-toggle="previous" id="btnAtras">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <div class="vcal-header__label" data-calendar-label="month" id="lblMes">
+            March 2017
+          </div>
+          <button class="vcal-btn" data-calendar-toggle="next" id="btnAdelante">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="vcal-week">
+          <span>Lun</span>
+          <span>Mar</span>
+          <span>Mie</span>
+          <span>Jue</span>
+          <span>Vie</span>
+          <span>Sab</span>
+          <span>Dom</span>
+        </div>
+        <div class="vcal-body" data-calendar-area="month" id="bodyCadelndario"></div>
+        <p class="demo-picked">
+          Date picked:
+          <span data-calendar-label="picked"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- Librerías de Terceros-->
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
+  <!-- JS Propio -->
+  <script type="text/javascript" src="../models/calendario.js"></script>
+  <script type="text/javascript" src="../collections/calendarios.js"></script>
+  <script type="text/javascript" src="../views/calendar.js"></script>
+  <!-- JS del footer -->
+  <script type="text/javascript">
+    var datos = ["2018-4-20", "2018-4-15", "2018-3-20", "2018-3-15"];
+    //var datos = [];
+    var calendario = new CalendarView({
+      el: "#calendarioDemo",
+      data: datos,
+      body: "bodyCadelndario",
+      next: "btnAdelante",
+      previous: "btnAtras",
+      label: "lblMes",
+      activeDates: null,
+      date: new Date(),
+      todaysDate: false,
+      disablePastDays: false,
+      meses: [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Deciembre"
+      ],
+    });
+  </script>
+</body>
+</html>

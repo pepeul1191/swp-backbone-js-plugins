@@ -33,3 +33,5 @@ Fuentes:
 + https://coursework.vschool.io/testing-javascript-with-jasmine/
 + https://www.npmjs.com/package/express-fileupload
 + https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
++ https://github.com/vanilla-calendar/vanilla-calendar
++ https://github.com/rykdesjardins/js-calendar
