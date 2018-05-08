@@ -2,7 +2,6 @@ var CalendarView = Backbone.View.extend({
 	//el: "#formUbicaciones", definido en el constructor
 	initialize: function(params){
     // inicializar variables
-    this.data = params["data"];
     this.body = document.getElementById(params["body"]);
     this.next = params["next"];
     this.previous = params["previous"];
@@ -10,10 +9,10 @@ var CalendarView = Backbone.View.extend({
     this.meses = params["meses"];
     this.disablePastDays = params["disablePastDays"];
     this.activeDates = params["activeDates"];
-    this.date = params["date"];
-    this.date.setDate(1);
+    this.date = params["date"]; this.date.setDate(1);
+    this.model = params["model"];
+    this.collection = params["collection"];
     this.todaysDate = params["todaysDate"];
-    this.crearBody();
     // asignacion dinamica de eventos
     this.events = this.events || {};
     this.events["click #" + this.next] = "mesSiguiente";
@@ -23,28 +22,34 @@ var CalendarView = Backbone.View.extend({
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
   },
+  cargarSelecciones: function(datos){
+    for(var i = 0; i < datos.length; i++){
+      var modelo = new window[this.model]({fecha: datos[i]});
+      this.collection.add(modelo);
+    }
+  },
   mesSiguiente: function(event){
     this.limpiarBody();
-    var nextMonth = this.date.getMonth() + 1;
-    this.date.setMonth(nextMonth);
+    var mesSiguiente = this.date.getMonth() + 1;
+    this.date.setMonth(mesSiguiente);
     this.crearBody();
   },
   mesAnterior: function(event){
     this.limpiarBody();
-    var prevMonth = this.date.getMonth() - 1;
-    this.date.setMonth(prevMonth);
+    var mesAnterior = this.date.getMonth() - 1;
+    this.date.setMonth(mesAnterior);
     this.crearBody();
   },
   limpiarBody: function(){
     this.body.innerHTML = "";
   },
   crearBody: function(){
-    var currentMonth = this.date.getMonth();
-    while (this.date.getMonth() === currentMonth){
+    var mesActual = this.date.getMonth();
+    while (this.date.getMonth() === mesActual){
       this.crearDia(
         this.date.getDate(),
         this.date.getDay(),
-        currentMonth,
+        mesActual,
         this.date.getFullYear(),
       );
       this.date.setDate(this.date.getDate() + 1);
@@ -78,11 +83,11 @@ var CalendarView = Backbone.View.extend({
     if (this.date.toString() === this.todaysDate.toString()) {
       newDay.classList.add("vcal-date--today");
     }
-    /*
-    if(this.model.existe(year + "-" + (mes + 1) + "-" + num)){
-      newDay.classList.add("vcal-date--selected");
-    }
-    */
+    this.collection.each(function(model){
+      if(model.get("fecha") == (year + "-" + (mes + 1) + "-" + num)){
+        newDay.classList.add("vcal-date--selected");
+      }
+    });
     newDay.appendChild(dateEl);
     this.body.appendChild(newDay);
   },

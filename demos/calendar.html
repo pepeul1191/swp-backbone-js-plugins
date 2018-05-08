@@ -83,11 +83,10 @@
   <script type="text/javascript" src="../views/calendar.js"></script>
   <!-- JS del footer -->
   <script type="text/javascript">
-    var datos = ["2018-4-20", "2018-4-15", "2018-3-20", "2018-3-15"];
+    var datos = ["2018-5-20", "2018-5-15", "2018-4-20", "2018-4-15", "2018-3-20", "2018-3-15"];
     //var datos = [];
     var calendario = new CalendarView({
       el: "#calendarioDemo",
-      data: datos,
       body: "bodyCadelndario",
       next: "btnAdelante",
       previous: "btnAtras",
@@ -96,6 +95,8 @@
       date: new Date(),
       todaysDate: false,
       disablePastDays: false,
+      collection: new CalendariosCollection(),
+      model: "Calendario",
       meses: [
         "Enero",
         "Febrero",
@@ -111,6 +112,8 @@
         "Deciembre"
       ],
     });
+    calendario.cargarSelecciones(datos);
+    calendario.crearBody();
   </script>
 </body>
 </html>
