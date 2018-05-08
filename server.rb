@@ -105,3 +105,8 @@ post '/departamento/guardar' do
       }.to_json
   end
 end
+
+# rutas : distrito
+get '/distrito/buscar' do
+  DistritoProvinciaDepartamento.where(Sequel.like(:nombre, params['nombre'] + '%')).limit(10).to_a.to_json
+end
