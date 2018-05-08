@@ -8,6 +8,7 @@ var CalendarView = Backbone.View.extend({
     this.label = document.getElementById(params["label"]);
     this.meses = params["meses"];
     this.disablePastDays = params["disablePastDays"];
+    this.disabledClick = params["disabledClick"];
     this.activeDates = params["activeDates"];
     this.date = params["date"]; this.date.setDate(1);
     this.model = params["model"];
@@ -21,11 +22,33 @@ var CalendarView = Backbone.View.extend({
 	},
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
+    "click div.vcal-date--active": "seleccionarDia",
   },
   cargarSelecciones: function(datos){
     for(var i = 0; i < datos.length; i++){
       var modelo = new window[this.model]({fecha: datos[i]});
       this.collection.add(modelo);
+    }
+  },
+  seleccionarDia: function(event){
+    if(this.disabledClick != true){
+      var target = null;
+      if(event.target.nodeName == "SPAN"){
+        target = event.target.parentElement;
+      }else{
+        target = event.target;
+      }
+      var diaSeleccion = target.getAttribute("data-calendar-date");
+      if (target.classList.contains('vcal-date--selected')) {
+        target.classList.remove('vcal-date--selected');
+        var viewCollection = this.collection;
+        var modelo = this.collection.where({fecha: diaSeleccion});
+        this.collection.remove(modelo);
+      }else{
+        target.classList.add('vcal-date--selected')
+        var modelo = new window[this.model]({fecha: diaSeleccion});
+        this.collection.add(modelo);
+      }
     }
   },
   mesSiguiente: function(event){
