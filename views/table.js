@@ -250,6 +250,11 @@ var TableView = Backbone.View.extend({
 							}
 						}
 					}
+					viewInstance.observador = {
+						nuevo: [],
+						editado: [],
+						eliminado: [],
+					};
 				}
 			},
 			error: function(error){
