@@ -28,7 +28,7 @@
     "handlebars": "^4.0.10",
     "backbone.marionette": "marionette#^3.4.0",
     "jquery": "^3.2.1",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.1",
     "font-awesome": "^4.7.0"
   }
 }

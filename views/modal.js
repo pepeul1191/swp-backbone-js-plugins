@@ -55,6 +55,7 @@ var ModalView = Backbone.View.extend({
     this.closeFunction();
   },
   triggerCloseFunctionClickBackground: function(event){
+		//console.log(event.target.parentElement.tagName);
     if(event.target.parentElement.tagName == "BODY"){
       this.triggerCloseFunction();
     }

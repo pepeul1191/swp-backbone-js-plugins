@@ -18,7 +18,24 @@
 </head>
 <!-- Inicio modal -->
 <button type="button" class="btn btn-primary btn-lg oculto" data-toggle="modal" data-target="#modal-container" id="btnModal">Launch demo modal</button>
-<div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Fin modal -->
 <body class="container">
@@ -43,7 +60,7 @@
   </div>
   <hr>
   <div class="row">
-    <button type="button" class="btn btn-default" id="btnTrigger">Cargar Modal</button>
+    <button type="button" class="btn btn-primary" id="btnTrigger">Cargar Modal</button>
   </div>
   <!-- Librerías de Terceros-->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
