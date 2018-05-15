@@ -6,16 +6,17 @@ var minifyCss = require("gulp-minify-css");
 var replace = require('gulp-replace');
 var plumber = require('gulp-plumber');
 var watch = require('gulp-watch');
+var sass = require('gulp-sass');
 var BASE_URL = 'http://localhost:9090/';
 var DESTINO = 'dist/';
 var MEDIA = ''
 
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------
 function errorLog(error){
     console.error.bind(error);
     this.emit('end');
 }
-// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------
 
 gulp.task('fonts', function() {
   gulp.src([
