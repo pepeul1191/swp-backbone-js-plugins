@@ -17,3 +17,4 @@ dist
 *.ods#
 uploads/
 Gemfile.lock
+yarn.lock

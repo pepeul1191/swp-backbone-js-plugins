@@ -1,5 +1,5 @@
 {
-  "name": "demo-express",
+  "name": "backbonejs-plugins-swp",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -22,5 +22,10 @@
     "path": "^0.12.7",
     "unirest": "^0.5.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "description": "BackboneJS Plugins SWP",
+  "main": "server.js",
+  "repository": "https://github.com/pepeul1191/swp-backbone-js-plugins.git",
+  "author": "Pepe Valdivia <<jvaldivia@softweb.pe>>",
+  "license": "MIT"
 }
