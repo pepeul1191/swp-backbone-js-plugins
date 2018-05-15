@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Calendario</title>
+  <link rel="../assets/img/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Librerías de Terceros-->
+  <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <!-- CSS Propio -->
+  <link href="../assets/css/styles.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/login.css" rel="stylesheet" type="text/css"/>
+  <!-- JS de cabecera -->
+  <script type="text/javascript">
+    const BASE_URL = "http://localhost:9090/";
+    const CSRF = "";
+  </script>
+</head>
+<body>
+  <div class="login-page">
+    <div class="form">
+      <form class="register-form">
+        <input type="text" placeholder="name"/>
+        <input type="password" placeholder="password"/>
+        <input type="text" placeholder="email address"/>
+        <button>create</button>
+        <p class="message">Already registered? <a href="#">Sign In</a></p>
+      </form>
+      <form class="login-form">
+        <input type="text" placeholder="username"/>
+        <input type="password" placeholder="password"/>
+        <button>login</button>
+        <p class="message">Not registered? <a href="#">Create an account</a></p>
+      </form>
+    </div>
+  </div>
+  <!-- Librerías de Terceros-->
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
+  <script type="text/javascript" src="../bower_components/handlebars/handlebars.min.js"></script>
+  <!-- JS Propio -->
+  <!-- JS del footer -->
+  <script type="text/javascript">
+    $('.message a').click(function(){
+     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+    });
+  </script>
+</body>
+</html>
