@@ -31,9 +31,7 @@
     <div class="col-md-6">
       <p>Modal</p>
       <ul>
-        <li>views/calendar.js</li>
-        <li>models/calendario.js</li>
-        <li>collections/calendarios.js</li>
+        <li>views/modal.js</li>
       </ul>
     </div>
     <div class="col-md-6">
@@ -57,18 +55,24 @@
   <script type="text/javascript" src="../views/modal.js"></script>
   <!-- JS del footer -->
   <script type="text/javascript">
-  $("#btnTrigger").click(function() {
     var context = {
       titulo_modal: "Título del Detalle"
     };
+    var functionClose = function(){
+      //alert("functionClose");
+      console.log("functionClose");
+    };
     var detalleModal = new ModalView({
-      el: "#modal-container",
+      el: "body",
+      containerModal: "modal-container",
       urlTemplate: BASE_URL + "templates/detalle.html",
       handlebarsTemplateId: "detalle-template",
       context: context,
+      closeFunction: functionClose,
     });
-    detalleModal.render();
-  });
+    $("#btnTrigger").click(function() {
+      detalleModal.render();
+    });
   </script>
 </body>
 </html>

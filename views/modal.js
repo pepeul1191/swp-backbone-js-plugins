@@ -3,28 +3,31 @@ var ModalView = Backbone.View.extend({
 	initialize: function(params){
     // inicializar variables
     this.btnModal = document.getElementById("btnModal");
-    this.containerModal = document.getElementById("containerModal");
+    this.containerModal = document.getElementById(params["containerModal"]);
     this.urlTemplate = params["urlTemplate"];
     this.handlebarsTemplateId = params["handlebarsTemplateId"];
     this.context = params["context"];
+    this.closeFunction = params["closeFunction"];
     // asignacion dinamica de eventos
     this.events = this.events || {};
     this.delegateEvents();
 	},
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
+    "keydown": "keyAction",
     "click .close": "triggerCloseFunction",
+    "click .modal": "triggerCloseFunction",
   },
   render: function(){
     //trigear el click el botón oculto
     this.btnModal.click();
     //cargar template como script de handlebars en el container del modal
-    this.$el.html(this.getTemplate());
+    this.containerModal.innerHTML = this.getTemplate();
     //compilar template de handlebars con los datos del contexto
     var source = $("#" + this.handlebarsTemplateId).html();
     var template = Handlebars.compile(source);
     var html = template(this.context);
-    this.$el.html(html);
+    this.containerModal.innerHTML = html;
   },
   getTemplate: function(){
     var template = null;
@@ -39,7 +42,13 @@ var ModalView = Backbone.View.extend({
     });
     return template;
   },
+  keyAction: function(event){
+    var code = event.keyCode || event.which;
+    if(code == 27 && this.$el.hasClass("modal-open")){ //se ha presionado la tecla Esc
+      this.triggerCloseFunction();
+    }
+  },
   triggerCloseFunction: function(){
-    alert();
+    this.closeFunction();
   },
 });
