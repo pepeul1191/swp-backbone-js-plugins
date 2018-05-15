@@ -16,7 +16,7 @@ var ModalView = Backbone.View.extend({
     // se está usando asignacion dinamica de eventos en el constructor
     "keydown": "keyAction",
     "click .close": "triggerCloseFunction",
-    "click .modal": "triggerCloseFunction",
+    "click .modal": "triggerCloseFunctionClickBackground",
   },
   render: function(){
     //trigear el click el botón oculto
@@ -45,10 +45,18 @@ var ModalView = Backbone.View.extend({
   keyAction: function(event){
     var code = event.keyCode || event.which;
     if(code == 27 && this.$el.hasClass("modal-open")){ //se ha presionado la tecla Esc
-      this.triggerCloseFunction();
+      $(".close").click();
     }
+  },
+  modalClose: function(){
+    console.log(this.$el);
   },
   triggerCloseFunction: function(){
     this.closeFunction();
+  },
+  triggerCloseFunctionClickBackground: function(event){
+    if(event.target.parentElement.tagName == "BODY"){
+      this.triggerCloseFunction();
+    }
   },
 });
