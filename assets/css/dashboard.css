@@ -12,3 +12,10 @@ footer > p { color: #999; padding-right: 10px; text-align: right; }
 footer > p > a { color: #999; font-weight: bold; }
 footer > p > a:hover { color: #343434; text-decoration: none; }
 .nav-active{background: var(--nav-primary-color); color: var(--primary-color)}
+#body-app { background: #FFF; margin-left: 0px; margin-right: 0px; padding-top: 15px; padding-bottom: 15px; margin-bottom: 10px;}
+#body-app > aside { border-right: 2px solid #ddd; }
+@media (max-width: 768px) {
+  #body-app > aside { border-bottom:2px solid #ddd; border-right: 0px solid #ddd; }
+  #body-app > aside { padding-bottom: 15px;}
+  #body-app > section { }
+}
