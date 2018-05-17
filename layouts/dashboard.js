@@ -27,10 +27,13 @@ $( document ).ready(function() {
 Handlebars.registerHelper( "menuModulos", function (){
 	var rpta = '';
 	MODULOS_JSON.forEach(function(modulo) {
+    console.log(DATA['modulo']);
+    console.log(modulo['nombre']);
+    console.log("++++++++++++++++++++++++++++++++++++");
 		if (DATA['modulo'] == modulo['nombre']){
-			rpta = rpta + "<li class='dropdown active'><a href='" + BASE_URL + modulo['url'] + "' class='dropdown-toggle' data-toggle='dropdown'>" + modulo['nombre'] + "</a></li>";
+			rpta = rpta + "<a href='" + BASE_URL + modulo['url'] + "' class='nav-active'>" + modulo['nombre'] + "</a>";
 		}else{
-			rpta = rpta + "<li class='dropdown'><a href='" + BASE_URL + modulo['url'] + "' class='dropdown-toggle' data-toggle='dropdown'>" + modulo['nombre'] + "</a></li>";
+			rpta = rpta + "<a href='" + BASE_URL + modulo['url'] + " class=''>" + modulo['nombre'] + "</a>";
 		}
 
 	});
@@ -40,9 +43,9 @@ Handlebars.registerHelper( "menuModulos", function (){
 Handlebars.registerHelper( "menuSubModulos", function (){
 	var rpta = '';
 	ITEMS_JSON.forEach(function(submodulo) {
-	  rpta = rpta + '<li class="list-group-item list-group-item-subtitulo">' + submodulo['subtitulo'] + "</li>";
+	  rpta = rpta + '<li class="li-submodulo">' + submodulo['subtitulo'] + "</li>";
 		submodulo['items'].forEach(function(item){
-			rpta = rpta + '<li class="list-group-item list-group-item-item"><a href="'+ BASE_URL + item['url']  + '"><i class="fa fa-chevron-right" aria-hidden="true"></i>' + item['item'] + '</a></li>';
+			rpta = rpta + '<li class="li-item"><a href="'+ BASE_URL + item['url']  + '">' + item['item'] + '</a></li>';
 		});
 	});
 	return rpta;

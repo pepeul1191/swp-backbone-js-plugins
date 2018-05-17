@@ -17,35 +17,12 @@
     const STATICS_URL  = "http://localhost:9090/";
     const MODULOS_JSON = JSON.parse('[{"url":"accesos\/","nombre":"Accesos"},{"url":"administracion\/","nombre":"Administración"}]');
     const ITEMS_JSON = JSON.parse('[{"subtitulo":"Opciones","items":[{"url":"administracion#\/evento","item":"Gestión de Eventos"},{"url":"administracion#\/alumno","item":"Gestión de Alumnos"},{"url":"administracion#\/empleado","item":"Gestión de Empleados"},{"url":"administracion#\/externo","item":"Gestión de Externos"}]}]');
-    const DATA = JSON.parse('{}');
+    const DATA = JSON.parse('{"modulo":"Accesos"}');
     const CSRF = "";
   </script>
 </head>
 <body>
-  <header>
-    <a href="#">Inicio</a>
-    <a href="#">Ayuda</a>
-    <a href="#" class="pull-right">Pepe Valdivia</a>
-    <a href="#" class="pull-right">Cerrar Sesión</a>
-  </header>
-  <nav>
-    <h1>Nombre de Aplicación</h1>
-    <a href="#" class="nav-active">Accesos</a>
-    <a href="#">Contenido</a>
-  </nav>
-  <div id="body-app" class="row">
-    <div id="app"></div>
-    <aside class="col-md-3">
-      ASIDE
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, e
-    </aside>
-    <section class="col-md-9 ">
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, e
-    </section>
-  </div>
-  <footer>
-    <p>Powered by: <a href="http://softweb.pe/">Software Web Perú</a> © 2011-2018 </p>
-  </footer>
+  <div id="app"></div>
   <!-- Handlebars Templates -->
   <script id="template" type="text/x-handlebars-template">
     {{> header}}
@@ -54,57 +31,40 @@
     {{> footer}}
   </script>
   <script id="header-template" type="text/x-handlebars-template">
-    <nav class="navbar navbar-default">
-    <div class="navbar-header">
-      <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="#" class="navbar-brand"><i class="fa fa-wpexplorer icono-brand" aria-hidden="true"></i>Centro Cultural ULima</a>
-    </div>
-    <div id="navbarCollapse" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        {{{menuModulos}}}
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{BASE_URL}}login/ver">Pepe Valdivia</a></li>
-        <li><a href="{{BASE_URL}}login/cerrar">Salir</a></li>
-      </ul>
-    </div>
+    <header>
+      <a href="{{BASE_URL}}">Inicio</a>
+      <a href="{{BASE_URL}}ayuda">Ayuda</a>
+      <a href="{{BASE_URL}}login/ver" class="pull-right">Pepe Valdivia</a>
+      <a href="{{BASE_URL}}login/cerrar" class="pull-right">Cerrar Sesión</a>
+    </header>
   </nav>
   <!-- Fin Header -->
   </script>
-  <script id="breadcrumb-template" type="text/x-handlebars-template"></script>
+  <script id="breadcrumb-template" type="text/x-handlebars-template">
+    <nav>
+      <h1>Nombre de Aplicación</h1>
+      {{{menuModulos}}}
+    </nav>
+  </script>
   <script id="contenido-template" type="text/x-handlebars-template">
-    <div class="container content">
-      <div class="col-md-3" id="menu-side">
+    <div id="body-app" class="row">
+      <aside class="col-md-2">
         {{{menuSubModulos}}}
-      </div>
-      <div class="col-md-9" id="workspace">
+      </aside>
+      <section class="col-md-10">
         <!-- Inicio Yield-->
         {{> yield}}
         <!-- Fin Yield-->
-      </div>
+      </section>
     </div>
   </script>
   <script id="footer-template" type="text/x-handlebars-template">
-    <footer class="nb-footer">
-      <section class="copyright">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6" style="color: #fdfdfd;">
-              <p>Copyright © 2017. Your Company.</p>
-            </div>
-            <div class="col-sm-6"></div>
-          </div>
-        </div>
-      </section>
+    <footer>
+      <p>Powered by: <a href="http://softweb.pe/">Software Web Perú</a> © 2011-2018 </p>
     </footer>
   </script>
   <script id="yield" type="text/x-handlebars-template">
-     <%= content %>
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, e
   </script>
   <!-- Librerías de Terceros-->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
