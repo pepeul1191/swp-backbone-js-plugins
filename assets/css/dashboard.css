@@ -22,3 +22,4 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
   #body-app > aside { padding-bottom: 15px; }
   #body-app > section { padding-top: 15px; }
 }
+.oculto{ display: none; }
