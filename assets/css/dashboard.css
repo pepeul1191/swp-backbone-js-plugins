@@ -1,4 +1,4 @@
-body { background: #F1EFE2; font-family: Verdana, sans-serif; font-size: 11px; padding: 10px }
+body { background: var(--background-primary-color); font-family: Verdana, sans-serif; font-size: 11px; padding: 10px }
 header { background: var(--secondary-color) }
 header > a { font-weight: 600; padding-left: 10px; padding-right: 10px; color: var(--nav-primary-color); }
 header > a:hover { font-weight: 900; text-decoration: none; color: white; }
@@ -16,6 +16,6 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 #body-app > aside { border-right: 2px solid #ddd; }
 @media (max-width: 768px) {
   #body-app > aside { border-bottom:2px solid #ddd; border-right: 0px solid #ddd; }
-  #body-app > aside { padding-bottom: 15px;}
-  #body-app > section { }
+  #body-app > aside { padding-bottom: 15px; }
+  #body-app > section { padding-top: 15px; }
 }
