@@ -27,13 +27,10 @@ $( document ).ready(function() {
 Handlebars.registerHelper( "menuModulos", function (){
 	var rpta = '';
 	MODULOS_JSON.forEach(function(modulo) {
-    console.log(DATA['modulo']);
-    console.log(modulo['nombre']);
-    console.log("++++++++++++++++++++++++++++++++++++");
 		if (DATA['modulo'] == modulo['nombre']){
 			rpta = rpta + "<a href='" + BASE_URL + modulo['url'] + "' class='nav-active'>" + modulo['nombre'] + "</a>";
 		}else{
-			rpta = rpta + "<a href='" + BASE_URL + modulo['url'] + " class=''>" + modulo['nombre'] + "</a>";
+			rpta = rpta + "<a href='" + BASE_URL + modulo['url'] + "' class=''>" + modulo['nombre'] + "</a>";
 		}
 
 	});
