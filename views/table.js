@@ -127,6 +127,22 @@ var TableView = Backbone.View.extend({
         //console.log(inputText);
 				return td;
       },
+			"select": function(params){
+				//console.log("LABEL_ID");
+				var td = document.createElement("td");
+				var select = document.createElement("select");
+				select.setAttribute("style", params.fila.estilos);
+				//console.log(params.modelo.get(params.key));
+				for (var i = 0; i < params.fila.collection.models.length; i++) {
+					var option = document.createElement("option");
+					option.value = params.fila.collection.models[i].get("id");
+					option.text = params.fila.collection.models[i].get("nombre");
+					select.appendChild(option);
+				}
+				select.selectedIndex = params.modelo.get(params.key);
+				td.appendChild(select);
+				return td;
+			},
       "btn_td": function(params){
 				//console.log("BTN-TD");
 				var td = document.createElement("td");

@@ -105,6 +105,35 @@
       </table>
     </div>
   </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6" id="formTableEstacion">
+      <h5 class="subtitulo" style="margin-bottom:15px">Estaciones</h5>
+      <label class="texto-der" id="mensajeRptaEstaciones"></label>
+      <table class="table table-striped" style="" id="tablaEstaciones">
+        <thead>
+          <tr>
+            <th style="width: 10px; display:none;">id</th>
+            <th style="width: 100px;">Nombre</th>
+            <th style="width: 250px;">Descripción</th>
+            <th style="width: 50px;">Latitud</th>
+            <th style="width: 50px;">Longitud</th>
+            <th style="width: 50px;">Altura</th>
+            <th style="width: 125px;">Tipo de Estacion</th>
+            <th style="width: 80px;">Botones</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="1000" style="text-align:right">
+              <button class="btn btn-primary agregar-fila"> <i class="fa fa-plus" style="margin-right:5px"></i>Agregar Registro</button>
+              <button class="btn btn-primary guardar-tabla"> <i class="fa fa-check" style="margin-right:5px"></i>Guardar Cambios</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
   <!-- Librerías de Terceros-->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -115,10 +144,15 @@
   <script type="text/javascript" src="../collections/departamentos.js"></script>
   <script type="text/javascript" src="../models/provincia.js"></script>
   <script type="text/javascript" src="../collections/provincias.js"></script>
+  <script type="text/javascript" src="../models/tipo_estacion.js"></script>
+  <script type="text/javascript" src="../collections/tipo_estaciones.js"></script>
+  <script type="text/javascript" src="../models/estacion.js"></script>
+  <script type="text/javascript" src="../collections/estaciones.js"></script>
   <script type="text/javascript" src="../views/table.js"></script>
   <script type="text/javascript" src="../views/demo-tablas.js"></script>
   <!-- JS del footer -->
   <script type="text/javascript">
+    // UBICACIONES
     var departamentoTable = new TablaDepatartamentoView({
       el: "#formTableDepartamento",
       idTable: "tablaDepatartamento",
@@ -243,6 +277,76 @@
       model: "Provincia",
     });
     departamentoTable.listar();
+    // ESTACIONES
+    tipoEstacionesCollection = new TipoEstacionesCollection({
+      targetMensaje: "mensajeRptaEstaciones",
+    });
+    tipoEstacionesCollection.llenarModels();
+    var estacionTable = new TableView({
+      el: "#formTableEstacion",
+      idTable: "tablaEstaciones",
+      targetMensaje: "mensajeRptaEstaciones",
+      mensajes: {
+        errorListarAjax: "Error en listar los datos del servidor",
+        errorGuardarAjax: "Error en guardar los datos en el servidor",
+        success: "Se cargado guardo los cambios en las estaciones",
+      },
+      //urlListar: BASE_URL + "distrito/listar/" + provinciaId,
+      urlGuardar: BASE_URL + "estacion/guardar",
+      urlListar: BASE_URL + "estacion/listar",
+      fila: {
+        id: { // llave de REST
+          tipo: "td_id",
+          estilos: "color: blue; display:none",
+          edicion: false,
+        },
+        nombre: { // llave de REST
+          tipo: "text",
+          estilos: "width: 100px;",
+          edicion: true,
+        },
+        descripcion: { // llave de REST
+          tipo: "text",
+          estilos: "width: 250px;",
+          edicion: true,
+        },
+        latitud: { // llave de REST
+          tipo: "text",
+          estilos: "width: 50px;",
+          edicion: true,
+        },
+        longitud: { // llave de REST
+          tipo: "text",
+          estilos: "width: 50px;",
+          edicion: true,
+        },
+        altura: { // llave de REST
+          tipo: "text",
+          estilos: "width: 50px;",
+          edicion: true,
+        },
+        tipo_estacion_id: { // llave de REST
+          tipo: "select",
+          estilos: "width: 125px;",
+          edicion: true,
+          collection: tipoEstacionesCollection,
+        },
+        filaBotones: {
+          estilos: "width: 80px"
+        },
+      },
+      filaBotones: [
+        {
+          tipo: "i",
+          claseOperacion: "quitar-fila",
+          clase: "fa-times",
+          estilos: "padding-left: 15px;",
+        },
+      ],
+      collection: new EstacionesCollection(),
+      model: "Estacion",
+    });
+    estacionTable.listar();
   </script>
 </body>
 </html>

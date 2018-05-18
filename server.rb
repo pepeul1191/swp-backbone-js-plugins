@@ -19,6 +19,13 @@ end
 class DistritoProvinciaDepartamento < Sequel::Model(DB[:vw_distrito_provincia_departamentos])
 end
 
+class TipoEstacion < Sequel::Model(DB[:tipo_estaciones])
+end
+
+
+class Estacion < Sequel::Model(DB[:estaciones])
+end
+
 # aplicación sinatra
 before do
   headers['Access-Control-Allow-Origin'] = '*'
@@ -256,4 +263,13 @@ post '/distrito/guardar' do
         ]
       }.to_json
   end
+end
+
+# rutas : tipo_estacion
+get '/tipo_estacion/listar' do
+  TipoEstacion.select(:id, :nombre).all().to_a.to_json
+end
+
+get '/estacion/listar' do
+  Estacion.select(:id, :nombre, :descripcion, :latitud, :longitud, :altura, :tipo_estacion_id).all().to_a.to_json
 end

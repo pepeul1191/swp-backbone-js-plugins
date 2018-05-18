@@ -119,3 +119,21 @@ app.post('/distrito/guardar', function (req, res) {
     res.send(response.body);
   });
 });
+app.get('/tipo_estacion/listar', function (req, res) {
+  unirest.get(servicio_url + 'tipo_estacion/listar')
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
+app.get('/estacion/listar', function (req, res) {
+  unirest.get(servicio_url + 'estacion/listar')
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
