@@ -31,6 +31,7 @@ var TableView = Backbone.View.extend({
 		"click i.quitar-fila": "quitarFila",
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
+		"change td > select": "cambiarSelect",
   },
 	//método que permite la herencia de eventos
 	inheritEvents: function(parent) {
@@ -140,6 +141,7 @@ var TableView = Backbone.View.extend({
 					option.text = params.fila.collection.models[i].get("nombre");
 					select.appendChild(option);
 				}
+				select.setAttribute("key", params.key);
 				select.value = params.modelo.get(params.key);
 				td.appendChild(select);
 				return td;
@@ -204,6 +206,14 @@ var TableView = Backbone.View.extend({
 			this.observador.eliminado.push(idFila + "");
 		}
 		this.collection.remove(modelo);
+	},
+	cambiarSelect: function(event){
+		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
+		var valorSelect = event.target.value;
+		var key = event.target.getAttribute("key");
+		var modelo = this.collection.get(idFila);
+		//console.log("inputTextEscribir");
+		modelo.set(key, valorSelect);
 	},
 	agregarFila: function(event){
 		var tbody = event.target.parentElement.parentElement.parentElement.parentElement.lastChild;
