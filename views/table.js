@@ -133,13 +133,14 @@ var TableView = Backbone.View.extend({
 				var select = document.createElement("select");
 				select.setAttribute("style", params.fila.estilos);
 				//console.log(params.modelo.get(params.key));
+				//console.log(params.fila.collection.models);
 				for (var i = 0; i < params.fila.collection.models.length; i++) {
 					var option = document.createElement("option");
 					option.value = params.fila.collection.models[i].get("id");
 					option.text = params.fila.collection.models[i].get("nombre");
 					select.appendChild(option);
 				}
-				select.selectedIndex = params.modelo.get(params.key);
+				select.value = params.modelo.get(params.key);
 				td.appendChild(select);
 				return td;
 			},

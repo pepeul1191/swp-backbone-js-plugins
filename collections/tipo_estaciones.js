@@ -2,11 +2,11 @@ var TipoEstacionesCollection = Backbone.Collection.extend({
   model: TipoEstacion,
   initialize: function(params) {
     this.targetMensaje = params["targetMensaje"];
-    this.models = [];
   },
   llenarModels: function(){
     var responseData = [];
     var viewInstance = this;
+    this.models = []; // para evitar que el primero sea nulo
     $.ajax({
       type: "GET",
       url: BASE_URL + "tipo_estacion/listar",
