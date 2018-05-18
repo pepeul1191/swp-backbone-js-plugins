@@ -137,3 +137,12 @@ app.get('/estacion/listar', function (req, res) {
     res.send(response.body);
   });
 });
+app.post('/estacion/guardar', function (req, res) {
+  unirest.post(servicio_url + 'estacion/guardar?data=' + req.body.data)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});

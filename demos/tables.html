@@ -107,7 +107,7 @@
   </div>
   <hr>
   <div class="row">
-    <div class="col-md-6" id="formTableEstacion">
+    <div class="col-md-10" id="formTableEstacion">
       <h5 class="subtitulo" style="margin-bottom:15px">Estaciones</h5>
       <label class="texto-der" id="mensajeRptaEstaciones"></label>
       <table class="table table-striped" style="" id="tablaEstaciones">
@@ -278,7 +278,7 @@
     });
     departamentoTable.listar();
     // ESTACIONES
-    tipoEstacionesCollection = new TipoEstacionesCollection({
+    var tipoEstacionesCollection = new TipoEstacionesCollection({
       targetMensaje: "mensajeRptaEstaciones",
     });
     tipoEstacionesCollection.llenarModels();

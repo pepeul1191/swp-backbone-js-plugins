@@ -273,3 +273,79 @@ end
 get '/estacion/listar' do
   Estacion.select(:id, :nombre, :descripcion, :latitud, :longitud, :altura, :tipo_estacion_id).all().to_a.to_json
 end
+
+post '/estacion/guardar' do
+  data = JSON.parse(params[:data])
+  nuevos = data['nuevos']
+  editados = data['editados']
+  eliminados = data['eliminados']
+  rpta = []
+  array_nuevos = []
+  error = false
+  execption = nil
+  DB.transaction do
+    begin
+      if nuevos.length != 0
+        nuevos.each do |nuevo|
+          n = Estacion.new(
+            :nombre => nuevo['nombre'],
+            :descripcion => nuevo['descripcion'],
+            :latitud => nuevo['latitud'],
+            :longitud => nuevo['longitud'],
+            :altura => nuevo['altura'],
+            :tipo_estacion_id => nuevo['tipo_estacion_id'],
+          )
+          n.save
+          t = {
+            :temporal => nuevo['id'],
+            :nuevo_id => n.id
+          }
+          array_nuevos.push(t)
+        end
+      end
+      if editados.length != 0
+        editados.each do |editado|
+          e = Estacion.where(
+            :id => editado['id']
+          ).first
+          e.nombre = editado['nombre']
+          e.descripcion = editado['descripcion']
+          e.latitud = editado['latitud']
+          e.longitud = editado['longitud']
+          e.altura = editado['altura']
+          e.tipo_estacion_id = editado['tipo_estacion_id']
+          e.save
+        end
+      end
+      if eliminados.length != 0
+        eliminados.each do |eliminado|
+          Estacion.where(
+            :id => eliminado
+          ).delete
+        end
+      end
+    rescue Exception => e
+      Sequel::Rollback
+      error = true
+      execption = e
+    end
+  end
+  if error == false
+    return {
+      :tipo_mensaje => 'success',
+      :mensaje => [
+        'Se ha registrado los cambios en las estaciones',
+        array_nuevos
+        ]
+      }.to_json
+  else
+    status 500
+    return {
+      :tipo_mensaje => 'error',
+      :mensaje => [
+        'Se ha producido un error en guardar la tabla de estaciones',
+        execption.message
+        ]
+      }.to_json
+  end
+end
