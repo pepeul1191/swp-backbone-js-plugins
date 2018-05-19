@@ -60,4 +60,10 @@ var ModalView = Backbone.View.extend({
       this.triggerCloseFunction();
     }
   },
+  set: function(key, value){
+    this[key] = value;
+  },
+  get:function(key){
+    return this[key];
+  },
 });
