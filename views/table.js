@@ -95,7 +95,7 @@ var TableView = Backbone.View.extend({
       error: function(error){
         $("#" + viewInstance.targetMensaje).removeClass("color-success");
         $("#" + viewInstance.targetMensaje).removeClass("color-warning");
-        $("#" + viewInstance.targetMensaje).addClass("color-rojo");
+        $("#" + viewInstance.targetMensaje).addClass("color-danger");
         $("#" + viewInstance.targetMensaje).html(viewInstance.mensajes["errorListarAjax"]);
         console.log(error);
       }
@@ -274,7 +274,7 @@ var TableView = Backbone.View.extend({
 			success: function(data){
 				var responseData = JSON.parse(data);
 				if(responseData.tipo_mensaje == "success"){
-					$("#" + viewInstance.targetMensaje).removeClass("color-rojo");
+					$("#" + viewInstance.targetMensaje).removeClass("color-danger");
 	        $("#" + viewInstance.targetMensaje).removeClass("color-warning");
 	        $("#" + viewInstance.targetMensaje).addClass("color-success");
 	        $("#" + viewInstance.targetMensaje).html(responseData.mensaje[0]);
@@ -309,7 +309,7 @@ var TableView = Backbone.View.extend({
 			error: function(error){
 				$("#" + viewInstance.targetMensaje).removeClass("color-success");
 				$("#" + viewInstance.targetMensaje).removeClass("color-warning");
-				$("#" + viewInstance.targetMensaje).addClass("color-rojo");
+				$("#" + viewInstance.targetMensaje).addClass("color-danger");
 				$("#" + viewInstance.targetMensaje).html(viewInstance.mensajes["errorGuardarAjax"]);
 				$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
 				console.log(error);

@@ -23,4 +23,9 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
   #body-app > aside { padding-bottom: 15px; }
   #body-app > section { padding-top: 15px; }
 }
+.color-danger{color:var(--danger);}
+.color-warning{color: var(--warning);}
+.color-success{color: var(--success);}
+.btn-default{ border-radius: 0px; font-size: 11px; padding: 0.25rem .40rem; background: #f7f7f7; color: #484848; border: solid 1px #c1c1c1; }
+.btn-default:hover{ background: #c1c1c1; color: #343434; }
 .oculto{ display: none; }

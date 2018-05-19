@@ -15,3 +15,4 @@ table tbody tr:nth-child(even) td{ background: #f7f7f7; }
 table tbody tr td i:hover{ cursor: pointer; }
 .table-striped>tbody>tr:nth-of-type(odd) { background-color: transparent; }
 tfoot tr td button, tfoot tr td a{margin-left: 10px}
+table > tfoot > tr > td { padding-top: 10px !important; }
