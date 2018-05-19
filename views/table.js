@@ -164,7 +164,14 @@ var TableView = Backbone.View.extend({
 							boton = htmlI;
 							break;
 						case "href":
-							// TODO
+							var href = document.createElement("a");
+							var htmlI = document.createElement("i");
+							htmlI.classList.add("fa");
+							htmlI.classList.add(params.filaBotones[i].clase);
+							href.setAttribute("href", params.filaBotones[i].url + params.modelo.id);
+							href.classList.add(params.filaBotones[i].claseOperacion);
+							href.appendChild(htmlI);
+							boton = href;
 							break;
 						default:
 							console.log("tipo de botón no soportado");
