@@ -29,3 +29,7 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 .btn-default{ border-radius: 0px; font-size: 11px; padding: 0.20rem 0.40rem; background: #f7f7f7; color: #484848; border: solid 1px #c1c1c1; }
 .btn-default:hover{ background: #c1c1c1; color: #343434; }
 .oculto{ display: none; }
+/*modal*/
+.modal-content{border-radius: 0px; }
+.close{font-size: 1.25rem;}
+.modal-header, .modal-footer { padding: 0.75rem;}
