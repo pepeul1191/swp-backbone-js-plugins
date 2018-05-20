@@ -18,6 +18,13 @@ var ModalView = Backbone.View.extend({
     "click .close": "triggerCloseFunction",
     "click .modal": "triggerCloseFunctionClickBackground",
   },
+  inheritEvents: function(parent) {
+    var parentEvents = parent.prototype.events;
+    if (_.isFunction(parentEvents)) {
+      parentEvents = parentEvents();
+    }
+    this.events = _.extend({}, parentEvents, this.events);
+  },
   render: function(){
     //trigear el click el botón oculto
     this.btnModal.click();
