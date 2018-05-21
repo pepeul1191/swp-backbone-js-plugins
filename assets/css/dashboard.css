@@ -10,6 +10,7 @@ nav > a:hover { color: var(--secondary-color); background: var(--nav-primary-col
 nav > .nav-active:hover{ color: var(--secondary-color); text-decoration: none;}
 h1 { font-size: 23px; }
 h4 { font-size: 1.05rem; }
+h6 { font-size: 0.90rem; }
 footer > p { color: #999; padding-right: 10px; text-align: right; }
 footer > p > a { color: #999; font-weight: bold; }
 footer > p > a:hover { color: #343434; text-decoration: none; }
@@ -30,9 +31,12 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 .btn-default{ border-radius: 0px; font-size: 11px; padding: 0.20rem 0.40rem; background: #f7f7f7; color: #484848; border: solid 1px #c1c1c1; }
 .btn-default:hover{ background: #c1c1c1; color: #343434; }
 .oculto{ display: none; }
+.form-control{border-radius: 0px; font-size: 0.7rem; padding: .255rem .55rem;}
+.form-group-btn{padding-top: 25px;}
+select.form-control:not([size]):not([multiple]) { height: calc(1.50rem + 2px); }
 /*modal*/
 .modal-content{border-radius: 0px; }
-.modal-body { padding-top: 5px; }
+.modal-body { padding-top: 15px; }
 .close{font-size: 1.25rem;}
 .modal-header, .modal-footer { padding: 0.75rem;}
 @media (min-width: 992px){
