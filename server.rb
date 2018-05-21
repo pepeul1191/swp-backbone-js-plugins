@@ -196,6 +196,14 @@ get '/distrito/buscar' do
   DistritoProvinciaDepartamento.where(Sequel.like(:nombre, params['nombre'] + '%')).limit(10).to_a.to_json
 end
 
+get '/distrito/buscar_pagina' do
+  data = JSON.parse(params['data'])
+  step = data['step']
+  page = data['page']
+  inicio = (page - 1) * step
+  DistritoProvinciaDepartamento.limit(step, inicio).to_a.to_json
+end
+
 post '/distrito/guardar' do
   data = JSON.parse(params[:data])
   nuevos = data['nuevos']
