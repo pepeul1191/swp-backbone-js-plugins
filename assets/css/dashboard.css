@@ -33,3 +33,6 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 .modal-content{border-radius: 0px; }
 .close{font-size: 1.25rem;}
 .modal-header, .modal-footer { padding: 0.75rem;}
+@media (min-width: 992px){
+  .modal-xlg { max-width: 1000px; }
+}
