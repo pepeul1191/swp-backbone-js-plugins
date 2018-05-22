@@ -18,6 +18,7 @@ var TableView = Backbone.View.extend({
 			editado: [],
 			eliminado: [],
 		};
+		this.pagination = params["pagination"];
     // asignacion dinamica de eventos
     this.events = this.events || {};
     //this.events["keyup #" + this.idNombre] = "buscarCooincidencias";
@@ -53,11 +54,27 @@ var TableView = Backbone.View.extend({
 	},
   listar: function(){
     this.collection.reset();
+    var dataSend= {
+    	csrfmiddlewaretoken: CSRF,
+    };
+    if(this.pagination !== undefined){
+    	var page = 1;
+    	if(this.page !== undefined){ //si no esta definida la pagina, por default 1
+    		page = this.page;
+    	}
+    	dataSend.data = JSON.stringify({
+    		step: this.pagination.pageSize,
+				page: page,
+    	});
+    	this.paginaActual = page;
+    	this.contarPaginas();
+    	this.crearPaginacion();
+    }
     var viewInstance = this;
     $.ajax({
       type: "GET",
       url: viewInstance.urlListar,
-      data: {csrfmiddlewaretoken: CSRF},
+      data: dataSend,
       async: false,
       success: function(data){
         var responseData = JSON.parse(data);
@@ -100,6 +117,59 @@ var TableView = Backbone.View.extend({
         console.log(error);
       }
     });
+  },
+  contarPaginas: function(){
+  	var viewInstance = this;
+  	$.ajax({
+      type: "GET",
+      url: viewInstance.pagination.urlCount,
+      data: {csrfmiddlewaretoken: CSRF,},
+      async: false,
+      success: function(count){
+      	var temp = count/viewInstance.pagination.pageSize;
+      	if(temp % 1 > 0){
+      		viewInstance.cantidadPaginas = (count / viewInstance.pagination.pageSize) - (temp % 1) + 1;
+      	}else{
+      		viewInstance.cantidadPaginas = temp;
+      	}
+      },
+      error: function(error){
+      	//TODO
+        console.log(error);
+      }
+    });
+  },
+  crearPaginacion: function(){
+  	console.log(this.cantidadPaginas);
+  	console.log(this.paginaActual);
+  	console.log(document.getElementById(this.pagination.idBotonesPaginacion));
+  	var inicioHtmlI = document.createElement("i");
+		inicioHtmlI.classList.add("fa");
+		inicioHtmlI.classList.add("fa-fast-backward");
+		inicioHtmlI.classList.add("btn-pagination");
+		inicioHtmlI.setAttribute("alt", "Primeros " + this.pagination.pageSize + " registros");
+		var anteriorHtmlI = document.createElement("i");
+		anteriorHtmlI.classList.add("fa");
+		anteriorHtmlI.classList.add("fa-backward");
+		anteriorHtmlI.classList.add("btn-pagination");
+		anteriorHtmlI.setAttribute("alt", this.pagination.pageSize + " registros anteriores");
+		var labelIndice = document.createElement("label");
+		labelIndice.innerHTML = this.paginaActual + " / " + this.cantidadPaginas;
+		var siguienteHtmlI = document.createElement("i");
+		siguienteHtmlI.classList.add("fa");
+		siguienteHtmlI.classList.add("fa-forward");
+		siguienteHtmlI.classList.add("btn-pagination");
+		siguienteHtmlI.setAttribute("alt", this.pagination.pageSize + " registros posteriores");
+		var finHtmlI = document.createElement("i");
+		finHtmlI.classList.add("fa");
+		finHtmlI.classList.add("fa-fast-forward");
+		finHtmlI.classList.add("btn-pagination");
+		finHtmlI.setAttribute("alt", "Últimos " + this.pagination.pageSize + " registros");
+		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(inicioHtmlI);
+		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(anteriorHtmlI);
+		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(labelIndice);
+		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(siguienteHtmlI);
+		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(finHtmlI);
   },
   helper: function(params){
     return {

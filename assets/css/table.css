@@ -16,3 +16,5 @@ table tbody tr td i:hover, td > a > i:hover{ cursor: pointer; }
 .table-striped>tbody>tr:nth-of-type(odd) { background-color: transparent; }
 tfoot tr td button, tfoot tr td a{margin-left: 10px}
 table > tfoot > tr > td { padding-top: 10px !important; }
+.btn-pagination:hover{cursor: pointer;}
+.btn-pagination,.td-botones-paginacion > label{padding-left: 5px; padding-right: 5px; text-align: left;}

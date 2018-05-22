@@ -134,12 +134,38 @@
       </table>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-5" id="formTableViewDistrito">
+      <h5 class="subtitulo" style="margin-bottom:15px">Distritos View con Paginación</h5>
+      <label class="texto-der" id="mensajeRptaViewDistrito"></label>
+      <table class="table table-striped" style="" id="tablaViewDistrito">
+        <thead>
+          <tr>
+            <th style="width: 10px; display:none;">id</th>
+            <th style="width: 400px;">Nombre</th>
+            <th style="width: 80px;">Botones</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="500" style="text-align:right">
+              <span id="distritoBotonesPaginacion" class="td-botones-paginacion"></span>
+              <button class="btn btn-primary agregar-fila"> <i class="fa fa-plus" style="margin-right:5px"></i>Agregar Registro</button>
+              <button class="btn btn-primary guardar-tabla"> <i class="fa fa-check" style="margin-right:5px"></i>Guardar Cambios</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
   <!-- Librerías de Terceros-->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
   <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
   <!-- JS Propio -->
+  <script type="text/javascript" src="../models/view_distrito.js"></script>
+  <script type="text/javascript" src="../collections/view_distritos.js"></script>
   <script type="text/javascript" src="../models/departamento.js"></script>
   <script type="text/javascript" src="../collections/departamentos.js"></script>
   <script type="text/javascript" src="../models/provincia.js"></script>
@@ -283,7 +309,7 @@
     });
     tipoEstacionesCollection.llenarModels();
     var estacionTable = new TableView({
-      el: "#formTableEstacion",
+      el: "#formTableViewDistrito",
       idTable: "tablaEstaciones",
       targetMensaje: "mensajeRptaEstaciones",
       mensajes: {
@@ -347,6 +373,50 @@
       model: "Estacion",
     });
     estacionTable.listar();
+    var distritoTable = new TableView({
+      el: "#formTableViewDistrito",
+      idTable: "tablaViewDistrito",
+      targetMensaje: "mensajeRptaViewDistrito",
+      mensajes: {
+        errorListarAjax: "Error en listar los datos del servidor",
+        errorGuardarAjax: "Error en guardar los datos en el servidor",
+        success: "Se cargado guardo los cambios en las estaciones",
+      },
+      //urlListar: BASE_URL + "distrito/listar/" + provinciaId,
+      urlGuardar: BASE_URL + "distrito/guardar",
+      urlListar: BASE_URL + "distrito/buscar_pagina",
+      pagination: {
+        urlCount: BASE_URL + "distrito/count",
+        pageSize: 10,  
+        idBotonesPaginacion: "distritoBotonesPaginacion"
+      },
+      fila: {
+        id: { // llave de REST
+          tipo: "td_id",
+          estilos: "color: blue; display:none",
+          edicion: false,
+        },
+        nombre: { // llave de REST
+          tipo: "text",
+          estilos: "width: 400px;",
+          edicion: true,
+        },
+        filaBotones: {
+          estilos: "width: 80px"
+        },
+      },
+      filaBotones: [
+        {
+          tipo: "i",
+          claseOperacion: "quitar-fila",
+          clase: "fa-times",
+          estilos: "padding-left: 15px;",
+        },
+      ],
+      collection: new ViewDistritosCollection(),
+      model: "ViewDistrito",
+    });
+    distritoTable.listar();
   </script>
 </body>
 </html>

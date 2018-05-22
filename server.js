@@ -110,6 +110,25 @@ app.get('/distrito/listar/:provinciaId', function (req, res) {
     res.send(response.body);
   });
 });
+app.get('/distrito/count', function (req, res) {
+  unirest.get(servicio_url + 'distrito/count')
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
+app.get('/distrito/buscar_pagina', function (req, res) {
+  //BASE_URL + distrito/buscar_pagina?data={"step":10,"page":10}
+  unirest.get(servicio_url + 'distrito/buscar_pagina?data=' + req.query.data)
+  .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
+  .send()
+  .end(function (response) {
+    //console.log(response.body);
+    res.send(response.body);
+  });
+});
 app.post('/distrito/guardar', function (req, res) {
   unirest.post(servicio_url + 'distrito/guardar?data=' + req.body.data)
   .headers({'Accept': 'application/json', 'Content-Type': 'application/json'})
