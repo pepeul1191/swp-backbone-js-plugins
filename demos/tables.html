@@ -309,7 +309,7 @@
     });
     tipoEstacionesCollection.llenarModels();
     var estacionTable = new TableView({
-      el: "#formTableViewDistrito",
+      el: "#formTableEstacion",
       idTable: "tablaEstaciones",
       targetMensaje: "mensajeRptaEstaciones",
       mensajes: {
@@ -387,7 +387,7 @@
       urlListar: BASE_URL + "distrito/buscar_pagina",
       pagination: {
         urlCount: BASE_URL + "distrito/count",
-        pageSize: 5,  
+        pageSize: 15,  
         idBotonesPaginacion: "distritoBotonesPaginacion"
       },
       fila: {

@@ -183,38 +183,28 @@ var TableView = Backbone.View.extend({
 		}
   },
 	paginacionIrPrimero: function(){
-		if(this.paginaActual !== undefined){
-			this.paginaActual = 1;
-			this.limpiarBody();
-			this.limpiarPagination();
-			this.listar();
-		}
+		this.paginaActual = 1;
+		this.limpiarBody();
+		this.limpiarPagination();
+		this.listar();
 	},
 	paginacionIrAnteior: function(){
-		if(this.paginaActual !== undefined){
-			this.paginaActual = this.paginaActual - 1;
-			this.limpiarBody();
-			this.limpiarPagination();
-			this.listar();
-		}
+		this.paginaActual = this.paginaActual - 1;
+		this.limpiarBody();
+		this.limpiarPagination();
+		this.listar();
 	},
 	paginacionIrSiguiente: function(){
-		if(this.paginaActual !== undefined){
-			this.paginaActual = this.paginaActual + 1;
-			this.limpiarBody();
-			this.limpiarPagination();
-			this.listar();
-		}
+		this.paginaActual = this.paginaActual + 1;
+		this.limpiarBody();
+		this.limpiarPagination();
+		this.listar();
 	},
 	paginacionIrUltimo: function(){
-		console.log(this);
-		if(this.paginaActual !== undefined){
-			this.paginaActual = this.cantidadPaginas;
-			this.limpiarBody();
-			this.limpiarPagination();
-			this.listar();
-			console.log(this);
-		}
+		this.paginaActual = this.cantidadPaginas;
+		this.limpiarBody();
+		this.limpiarPagination();
+		this.listar();
 	},
   helper: function(params){
     return {
