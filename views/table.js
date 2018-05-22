@@ -219,6 +219,12 @@ var TableView = Backbone.View.extend({
       },
       "label": function(params){
         //console.log("LABEL");
+				var td = document.createElement("td");
+        td.setAttribute("style", params.fila.estilos);
+				td.setAttribute("key", params.key);
+        td.innerHTML = params.modelo.get(params.key);
+				//console.log(td);
+				return td;
       },
 			"text": function(params){
 				//console.log("LABEL_ID");
