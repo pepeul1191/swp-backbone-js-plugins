@@ -36,7 +36,7 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 select.form-control:not([size]):not([multiple]) { height: calc(1.50rem + 2px); }
 /*modal*/
 .modal-content{border-radius: 0px; }
-.modal-body { padding-top: 15px; }
+.modal-body { padding-top: 5px; }
 .close{font-size: 1.25rem;}
 .modal-header, .modal-footer { padding: 0.75rem;}
 @media (min-width: 992px){
