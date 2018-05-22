@@ -19,6 +19,7 @@ var TableView = Backbone.View.extend({
 			eliminado: [],
 		};
 		this.pagination = params["pagination"];
+		this.paginaActual = 1;
     // asignacion dinamica de eventos
     this.events = this.events || {};
     //this.events["keyup #" + this.idNombre] = "buscarCooincidencias";
@@ -33,6 +34,11 @@ var TableView = Backbone.View.extend({
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
 		"change td > select": "cambiarSelect",
+		//botones de paginacion
+		"click tfoot > tr > td > span > .fa-fast-backward": "paginacionIrPrimero",
+		"click tfoot > tr > td > span > .fa-backward": "paginacionIrAnteior",
+		"click tfoot > tr > td > span > .fa-forward": "paginacionIrSiguiente",
+		"click tfoot > tr > td > span > .fa-fast-forward": "paginacionIrUltimo",
   },
 	//método que permite la herencia de eventos
 	inheritEvents: function(parent) {
@@ -52,21 +58,20 @@ var TableView = Backbone.View.extend({
 			}
 		}
 	},
+	limpiarPagination: function(){
+		var elementos = document.getElementById(this.pagination.idBotonesPaginacion);
+		$(elementos).empty();
+	},
   listar: function(){
     this.collection.reset();
     var dataSend= {
     	csrfmiddlewaretoken: CSRF,
     };
     if(this.pagination !== undefined){
-    	var page = 1;
-    	if(this.page !== undefined){ //si no esta definida la pagina, por default 1
-    		page = this.page;
-    	}
     	dataSend.data = JSON.stringify({
     		step: this.pagination.pageSize,
-				page: page,
+				page: this.paginaActual,
     	});
-    	this.paginaActual = page;
     	this.contarPaginas();
     	this.crearPaginacion();
     }
@@ -140,37 +145,77 @@ var TableView = Backbone.View.extend({
     });
   },
   crearPaginacion: function(){
-  	console.log(this.cantidadPaginas);
-  	console.log(this.paginaActual);
-  	console.log(document.getElementById(this.pagination.idBotonesPaginacion));
-  	var inicioHtmlI = document.createElement("i");
-		inicioHtmlI.classList.add("fa");
-		inicioHtmlI.classList.add("fa-fast-backward");
-		inicioHtmlI.classList.add("btn-pagination");
-		inicioHtmlI.setAttribute("alt", "Primeros " + this.pagination.pageSize + " registros");
-		var anteriorHtmlI = document.createElement("i");
-		anteriorHtmlI.classList.add("fa");
-		anteriorHtmlI.classList.add("fa-backward");
-		anteriorHtmlI.classList.add("btn-pagination");
-		anteriorHtmlI.setAttribute("alt", this.pagination.pageSize + " registros anteriores");
-		var labelIndice = document.createElement("label");
-		labelIndice.innerHTML = this.paginaActual + " / " + this.cantidadPaginas;
-		var siguienteHtmlI = document.createElement("i");
-		siguienteHtmlI.classList.add("fa");
-		siguienteHtmlI.classList.add("fa-forward");
-		siguienteHtmlI.classList.add("btn-pagination");
-		siguienteHtmlI.setAttribute("alt", this.pagination.pageSize + " registros posteriores");
-		var finHtmlI = document.createElement("i");
-		finHtmlI.classList.add("fa");
-		finHtmlI.classList.add("fa-fast-forward");
-		finHtmlI.classList.add("btn-pagination");
-		finHtmlI.setAttribute("alt", "Últimos " + this.pagination.pageSize + " registros");
-		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(inicioHtmlI);
-		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(anteriorHtmlI);
-		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(labelIndice);
-		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(siguienteHtmlI);
-		document.getElementById(this.pagination.idBotonesPaginacion).appendChild(finHtmlI);
+  	var labelIndice = document.createElement("label");
+  	labelIndice.innerHTML = this.paginaActual + " / " + this.cantidadPaginas;
+  	var appendLabel = false;
+  	if(this.paginaActual != 1){
+  		var inicioHtmlI = document.createElement("i");
+			inicioHtmlI.classList.add("fa");
+			inicioHtmlI.classList.add("fa-fast-backward");
+			inicioHtmlI.classList.add("btn-pagination");
+			inicioHtmlI.setAttribute("alt", "Primeros " + this.pagination.pageSize + " registros");
+			var anteriorHtmlI = document.createElement("i");
+			anteriorHtmlI.classList.add("fa");
+			anteriorHtmlI.classList.add("fa-backward");
+			anteriorHtmlI.classList.add("btn-pagination");
+			anteriorHtmlI.setAttribute("alt", this.pagination.pageSize + " registros anteriores");
+			document.getElementById(this.pagination.idBotonesPaginacion).appendChild(inicioHtmlI);
+			document.getElementById(this.pagination.idBotonesPaginacion).appendChild(anteriorHtmlI);
+			document.getElementById(this.pagination.idBotonesPaginacion).appendChild(labelIndice);
+			appendLabel = true;
+		}
+		if(this.paginaActual != this.cantidadPaginas){
+			var siguienteHtmlI = document.createElement("i");
+			siguienteHtmlI.classList.add("fa");
+			siguienteHtmlI.classList.add("fa-forward");
+			siguienteHtmlI.classList.add("btn-pagination");
+			siguienteHtmlI.setAttribute("alt", this.pagination.pageSize + " registros posteriores");
+			var finHtmlI = document.createElement("i");
+			finHtmlI.classList.add("fa");
+			finHtmlI.classList.add("fa-fast-forward");
+			finHtmlI.classList.add("btn-pagination");
+			finHtmlI.setAttribute("alt", "Últimos " + this.pagination.pageSize + " registros");	
+			if(appendLabel == false){
+				document.getElementById(this.pagination.idBotonesPaginacion).appendChild(labelIndice);
+			}
+			document.getElementById(this.pagination.idBotonesPaginacion).appendChild(siguienteHtmlI);
+			document.getElementById(this.pagination.idBotonesPaginacion).appendChild(finHtmlI);
+		}
   },
+	paginacionIrPrimero: function(){
+		if(this.paginaActual !== undefined){
+			this.paginaActual = 1;
+			this.limpiarBody();
+			this.limpiarPagination();
+			this.listar();
+		}
+	},
+	paginacionIrAnteior: function(){
+		if(this.paginaActual !== undefined){
+			this.paginaActual = this.paginaActual - 1;
+			this.limpiarBody();
+			this.limpiarPagination();
+			this.listar();
+		}
+	},
+	paginacionIrSiguiente: function(){
+		if(this.paginaActual !== undefined){
+			this.paginaActual = this.paginaActual + 1;
+			this.limpiarBody();
+			this.limpiarPagination();
+			this.listar();
+		}
+	},
+	paginacionIrUltimo: function(){
+		console.log(this);
+		if(this.paginaActual !== undefined){
+			this.paginaActual = this.cantidadPaginas;
+			this.limpiarBody();
+			this.limpiarPagination();
+			this.listar();
+			console.log(this);
+		}
+	},
   helper: function(params){
     return {
       "td_id": function(params){

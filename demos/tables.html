@@ -373,7 +373,7 @@
       model: "Estacion",
     });
     estacionTable.listar();
-    var distritoTable = new TableView({
+    var viewDistritoTable = new TableView({
       el: "#formTableViewDistrito",
       idTable: "tablaViewDistrito",
       targetMensaje: "mensajeRptaViewDistrito",
@@ -387,7 +387,7 @@
       urlListar: BASE_URL + "distrito/buscar_pagina",
       pagination: {
         urlCount: BASE_URL + "distrito/count",
-        pageSize: 10,  
+        pageSize: 5,  
         idBotonesPaginacion: "distritoBotonesPaginacion"
       },
       fila: {
@@ -416,7 +416,7 @@
       collection: new ViewDistritosCollection(),
       model: "ViewDistrito",
     });
-    distritoTable.listar();
+    viewDistritoTable.listar();
   </script>
 </body>
 </html>
