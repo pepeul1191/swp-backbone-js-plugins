@@ -34,6 +34,8 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 .form-control{border-radius: 0px; font-size: 0.7rem; padding: .255rem .55rem;}
 .form-group-btn{padding-top: 25px;}
 select.form-control:not([size]):not([multiple]) { height: calc(1.50rem + 2px); }
+.btn-file{margin-right: 10px;}
+.btn-file > i {margin-right: 5px;}
 /*modal*/
 .modal-content{border-radius: 0px; }
 .modal-body { padding-top: 5px; }
