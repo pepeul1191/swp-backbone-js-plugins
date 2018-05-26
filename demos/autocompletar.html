@@ -72,7 +72,7 @@
   <script type="text/javascript" src="../views/autocomplete.js"></script>
   <!-- JS del footer -->
   <script type="text/javascript">
-    new AutocompleteView({
+    var autocomplete = new AutocompleteView({
       el: "#formUbicaciones",
       id: "lblDistritoId",
       nombre: "txtDistrito",
@@ -81,7 +81,7 @@
       mensajeError: "Ha ocurrido un error al buscar los distritos",
       url: BASE_URL + "distrito/buscar",
       collection: new DistritosCollection(),
-      model: new Distrito(),
+      model: "Distrito",
     });
   </script>
 </body>

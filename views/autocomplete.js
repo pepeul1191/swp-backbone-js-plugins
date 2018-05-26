@@ -23,48 +23,50 @@ var AutocompleteView = Backbone.View.extend({
   },
   buscarCooincidencias: function(event) {
     var textoIngresado = $(event.target).val();
-    this.collection.reset();
-    var viewInstance = this;
-    $.ajax({
-      type: "GET",
-      url: viewInstance.url,
-      data: {nombre: textoIngresado, csrfmiddlewaretoken: CSRF},
-      async: false,
-      success: function(data){
-        var distritos = JSON.parse(data);
-        for(var i = 0; i < distritos.length; i++){
-          var distrito = new Distrito({id: distritos[i]["id"], nombre: distritos[i]["nombre"]});
-          viewInstance.collection.add(distrito);
-        }
-        $("#" + viewInstance.idLabelMensajeError).html("");
-        if(viewInstance.collection.length > 0){
-          var lista = ""
-          $("#" + viewInstance.targetSugerencias).empty();
-          viewInstance.collection.each(function(distrito) {
-						var node = document.createElement("li");
-						node.classList.add("sugerencia");
-						node.setAttribute("id", distrito.get("id"));
-						var textnode = document.createTextNode(distrito.get("nombre"));
-						node.appendChild(textnode);
-						document.getElementById(viewInstance.targetSugerencias).appendChild(node);
-          });
-          $("#" + viewInstance.targetSugerencias).removeClass("oculto");
-          $("#" + viewInstance.targetSugerencias).append(lista);
-        }else{
+    if(textoIngresado != ""){
+      this.collection.reset();
+      var viewInstance = this;
+      $.ajax({
+        type: "GET",
+        url: viewInstance.url,
+        data: {nombre: textoIngresado, csrfmiddlewaretoken: CSRF},
+        async: false,
+        success: function(data){
+          var responseData = JSON.parse(data);
+          for(var i = 0; i < responseData.length; i++){
+            var modelo = new window[viewInstance.model]({id: responseData[i]["id"], nombre: responseData[i]["nombre"]});
+            viewInstance.collection.add(modelo);
+          }
+          $("#" + viewInstance.idLabelMensajeError).html("");
+          if(viewInstance.collection.length > 0){
+            var lista = ""
+            $("#" + viewInstance.targetSugerencias).empty();
+            viewInstance.collection.each(function(modelo) {
+              var node = document.createElement("li");
+              node.classList.add("sugerencia");
+              node.setAttribute("id", modelo.get("id"));
+              var textnode = document.createTextNode(modelo.get("nombre"));
+              node.appendChild(textnode);
+              document.getElementById(viewInstance.targetSugerencias).appendChild(node);
+            });
+            $("#" + viewInstance.targetSugerencias).removeClass("oculto");
+            $("#" + viewInstance.targetSugerencias).append(lista);
+          }else{
+            $("#" + viewInstance.idLabelMensajeError).removeClass("color-success");
+            $("#" + viewInstance.idLabelMensajeError).removeClass("color-danger");
+            $("#" + viewInstance.idLabelMensajeError).addClass("color-warning");
+            $("#" + viewInstance.idLabelMensajeError).html("No hay coincidencias");
+          }
+        },
+        error: function(error){
           $("#" + viewInstance.idLabelMensajeError).removeClass("color-success");
-          $("#" + viewInstance.idLabelMensajeError).removeClass("color-rojo");
-          $("#" + viewInstance.idLabelMensajeError).addClass("color-warning");
-          $("#" + viewInstance.idLabelMensajeError).html("No hay coincidencias");
+          $("#" + viewInstance.idLabelMensajeError).removeClass("color-warning");
+          $("#" + viewInstance.idLabelMensajeError).addClass("color-danger");
+          $("#" + viewInstance.idLabelMensajeError).html(viewInstance.mensajeError);
+          console.log(error);
         }
-      },
-      error: function(error){
-        $("#" + viewInstance.idLabelMensajeError).removeClass("color-success");
-        $("#" + viewInstance.idLabelMensajeError).removeClass("color-warning");
-        $("#" + viewInstance.idLabelMensajeError).addClass("color-rojo");
-        $("#" + viewInstance.idLabelMensajeError).html(viewInstance.mensajeError);
-        console.log(error);
-      }
-    });
+      });
+    }
   },
 	limpiarSiVacio: function(event){
 		//var textoIngresado = $(event.target).val();
@@ -74,6 +76,7 @@ var AutocompleteView = Backbone.View.extend({
     $("#" + this.idTarget).html(event.target.getAttribute("id"));
 		$("#" + this.idNombre).val(event.target.innerText);
 		$("#" + this.targetSugerencias).empty();
+    $("#" + this.targetSugerencias).addClass("oculto");
 		this.model = this.collection.get(event.target.getAttribute("id"));
 		this.collection.reset();
   },

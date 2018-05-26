@@ -120,6 +120,7 @@
             <th style="width: 70px;">Longitud</th>
             <th style="width: 70px;">Altura</th>
             <th style="width: 125px;">Tipo de Estacion</th>
+            <th style="width: 200px;">Distrito</th>
             <th style="width: 80px;">Botones</th>
           </tr>
         </thead>
@@ -356,6 +357,11 @@
           estilos: "width: 125px;",
           edicion: true,
           collection: tipoEstacionesCollection,
+        },
+        distrito_id: { // llave de REST
+          tipo: "text",
+          estilos: "width: 200px;",
+          edicion: true,
         },
         filaBotones: {
           estilos: "width: 80px"
