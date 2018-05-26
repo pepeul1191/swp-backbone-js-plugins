@@ -39,13 +39,13 @@ var UploadView = Backbone.View.extend({
 		if(!_.contains(this.allowTypes, file.type)){
 			$("#" + this.lblMensaje).removeClass("color-success");
 			$("#" + this.lblMensaje).removeClass("color-warning");
-			$("#" + this.lblMensaje).addClass("color-rojo");
+			$("#" + this.lblMensaje).addClass("color-danger");
 			$("#" + this.lblMensaje).html(this.mensajes.formatoNoValido);
 		}else{
 			if(file.size > this.maxSize){
 				$("#" + this.lblMensaje).removeClass("color-success");
         $("#" + this.lblMensaje).removeClass("color-warning");
-        $("#" + this.lblMensaje).addClass("color-rojo");
+        $("#" + this.lblMensaje).addClass("color-danger");
         $("#" + this.lblMensaje).html(this.mensajes.tamanioNoValido);
 			}else{
 				formData.append(this.fileName, file);
@@ -56,7 +56,7 @@ var UploadView = Backbone.View.extend({
 		    //for(var pair of formData.entries()) {console.log(pair[0]+ ', ' + pair[1]);}
 		    var viewInstance = this;
 		    $.ajax({
-		      type: "POST",
+		      type: "PUT",
 		      url: viewInstance.url,
 		      data: formData,
 		      //use contentType, processData for sure.
@@ -71,7 +71,7 @@ var UploadView = Backbone.View.extend({
 						$("#" + viewInstance.lblMensaje).html(viewInstance.mensajes["success"]);
 		        $("#" + viewInstance.subirBtnId).removeAttr("disabled");
 						$("#" + viewInstance.verBtnId).attr("href", data["mensaje"][2]);
-						$("#" + viewInstance.lblMensaje).removeClass("color-rojo");
+						$("#" + viewInstance.lblMensaje).removeClass("color-danger");
 						$("#" + viewInstance.lblMensaje).removeClass("color-warning");
 						$("#" + viewInstance.lblMensaje).addClass("color-success");
 						$("#" + viewInstance.verBtnId).attr("disabled", false);
