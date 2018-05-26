@@ -101,10 +101,10 @@ var TableView = Backbone.View.extend({
             		var td = viewInstance.helper()[fila.tipo](params, viewInstance);
             		tr.appendChild(td);
             	}else{
-            		console.error("Componente '" + fila.tipo + "' no se encuentra en helpers para construir el HTML");
+            		console.warn("Componente '" + fila.tipo + "' no se encuentra en helpers para construir el HTML");
             	}
             }else{
-            	console.error("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
+            	console.warn("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
             }
           }
 					// append de botones de la fila
@@ -274,7 +274,7 @@ var TableView = Backbone.View.extend({
 				inputText.setAttribute("key", params.key);
 				var idInputAutocomplete = viewInstance.idTable + params.key + "input" + _.random(0, 1000);
 				inputText.setAttribute("id", idInputAutocomplete);
-        inputText.value = params.modelo.get(params.key);
+        inputText.value = params.modelo.get(params.fila.keyModeloInput);
 				inputText.classList.add("autocomplete-text");
 				td.appendChild(inputText);
 				var ulSugerencias = document.createElement("ul");
