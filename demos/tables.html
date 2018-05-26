@@ -11,6 +11,7 @@
   <!-- CSS Propio -->
   <link href="../assets/css/styles.css" rel="stylesheet" type="text/css"/>
   <link href="../assets/css/table.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/autocomplete.css" rel="stylesheet" type="text/css"/>
   <!-- JS de cabecera -->
   <script type="text/javascript">
     const BASE_URL = "http://localhost:9090/";
@@ -166,15 +167,18 @@
   <script type="text/javascript" src="../bower_components/backbone/backbone-min.js"></script>
   <!-- JS Propio -->
   <script type="text/javascript" src="../models/view_distrito.js"></script>
-  <script type="text/javascript" src="../collections/view_distritos.js"></script>
   <script type="text/javascript" src="../models/departamento.js"></script>
-  <script type="text/javascript" src="../collections/departamentos.js"></script>
+  <script type="text/javascript" src="../models/distrito.js"></script>
   <script type="text/javascript" src="../models/provincia.js"></script>
-  <script type="text/javascript" src="../collections/provincias.js"></script>
   <script type="text/javascript" src="../models/tipo_estacion.js"></script>
-  <script type="text/javascript" src="../collections/tipo_estaciones.js"></script>
   <script type="text/javascript" src="../models/estacion.js"></script>
+  <script type="text/javascript" src="../collections/view_distritos.js"></script>
+  <script type="text/javascript" src="../collections/departamentos.js"></script>
+  <script type="text/javascript" src="../collections/distritos.js"></script>
+  <script type="text/javascript" src="../collections/provincias.js"></script>
+  <script type="text/javascript" src="../collections/tipo_estaciones.js"></script>
   <script type="text/javascript" src="../collections/estaciones.js"></script>
+  <script type="text/javascript" src="../views/autocomplete.js"></script>
   <script type="text/javascript" src="../views/table.js"></script>
   <script type="text/javascript" src="../views/demo-tablas.js"></script>
   <!-- JS del footer -->
@@ -359,9 +363,13 @@
           collection: tipoEstacionesCollection,
         },
         distrito_id: { // llave de REST
-          tipo: "text",
+          tipo: "autocomplete",
           estilos: "width: 200px;",
           edicion: true,
+          url: BASE_URL + "distrito/buscar",
+          collection: new DistritosCollection(),
+          model: "Distrito",
+          mensajeError: "Ha ocurrido un error al buscar los distritos",
         },
         filaBotones: {
           estilos: "width: 80px"

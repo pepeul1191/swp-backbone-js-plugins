@@ -44,7 +44,6 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="txtDistrito">Nombre de distrito - id: </label>
-        <label id="lblDistritoId" class="sugerencia">E</label>
         <input type="text" class="form-control" id="txtDistrito" placeholder="Distrito">
         <ul id="listaDistritos" class="oculto sugerencia-contenedor"></ul>
       </div>
@@ -74,7 +73,6 @@
   <script type="text/javascript">
     var autocomplete = new AutocompleteView({
       el: "#formUbicaciones",
-      id: "lblDistritoId",
       nombre: "txtDistrito",
       targetMensajeError: "lblMensaje",
       targetSugerencias: "listaDistritos",

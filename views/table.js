@@ -97,8 +97,12 @@ var TableView = Backbone.View.extend({
 							fila: fila,
             };
             if(fila !== undefined){
-            	var td = viewInstance.helper()[fila.tipo](params);
-							tr.appendChild(td);
+            	if(viewInstance.helper()[fila.tipo] !== undefined){
+            		var td = viewInstance.helper()[fila.tipo](params, viewInstance);
+            		tr.appendChild(td);
+            	}else{
+            		console.error("Componente '" + fila.tipo + "' no se encuentra en helpers para construir el HTML");
+            	}
             }else{
             	console.error("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
             }
@@ -210,7 +214,7 @@ var TableView = Backbone.View.extend({
 		this.limpiarPagination();
 		this.listar();
 	},
-  helper: function(params){
+  helper: function(params, viewInstance){
     return {
       "td_id": function(params){
 				//console.log("LABEL_ID");
@@ -261,6 +265,38 @@ var TableView = Backbone.View.extend({
 				td.appendChild(select);
 				return td;
 			},
+			"autocomplete": function(params, viewInstance){
+      	var td = document.createElement("td");
+				td.setAttribute("style", params.estilos);
+      	var inputText = document.createElement("INPUT");
+				inputText.setAttribute("type", "text");
+        inputText.setAttribute("style", params.fila.estilos);
+				inputText.setAttribute("key", params.key);
+				var idInputAutocomplete = viewInstance.idTable + params.key + "input" + _.random(0, 1000);
+				inputText.setAttribute("id", idInputAutocomplete);
+        inputText.value = params.modelo.get(params.key);
+				inputText.classList.add("autocomplete-text");
+				td.appendChild(inputText);
+				var ulSugerencias = document.createElement("ul");
+				ulSugerencias.classList.add("oculto");
+				ulSugerencias.classList.add("sugerencia-contenedor");
+				ulSugerencias.style.cssText = params.fila.estilos;
+				var idUlAutocomplete = viewInstance.idTable + params.key + "ul" + _.random(0, 1000);
+				ulSugerencias.setAttribute("id", idUlAutocomplete);
+				td.appendChild(ulSugerencias);
+				//crear instacia de autcompletar
+				new AutocompleteView({
+		      el: td,
+		      nombre: idInputAutocomplete,
+		      targetMensajeError: viewInstance.targetMensaje,
+		      targetSugerencias: idUlAutocomplete,
+		      mensajeError: params.fila.mensajeError,
+		      url: params.fila.url,
+		      collection: params.fila.collection,
+		      model: params.fila.model,
+		    });
+      	return td;
+      },
       "btn_td": function(params){
 				//console.log("BTN-TD");
 				var td = document.createElement("td");

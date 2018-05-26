@@ -73,7 +73,6 @@ var AutocompleteView = Backbone.View.extend({
 		// TODO
 	},
   sugerenciaClick: function(event){
-    $("#" + this.idTarget).html(event.target.getAttribute("id"));
 		$("#" + this.idNombre).val(event.target.innerText);
 		$("#" + this.targetSugerencias).empty();
     $("#" + this.targetSugerencias).addClass("oculto");
