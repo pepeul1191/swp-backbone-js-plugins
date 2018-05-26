@@ -312,6 +312,7 @@ post '/estacion/guardar' do
             :longitud => nuevo['longitud'],
             :altura => nuevo['altura'],
             :tipo_estacion_id => nuevo['tipo_estacion_id'],
+            :distrito_id => nuevo['distrito_id'],
           )
           n.save
           t = {
@@ -332,6 +333,7 @@ post '/estacion/guardar' do
           e.longitud = editado['longitud']
           e.altura = editado['altura']
           e.tipo_estacion_id = editado['tipo_estacion_id']
+          e.distrito_id = editado['distrito_id']
           e.save
         end
       end

@@ -10,6 +10,13 @@ var AutocompleteView = Backbone.View.extend({
     this.collection = params["collection"];
 		this.url = params["url"];
 		this.model = params["model"];
+    if(params["modeloCelda"] !== undefined){ // esto sólo estará seteado cuando hablamos de un tabla
+      this.modeloCelda = params["modeloCelda"];  
+      this.keyModeloCelda = params["keyModeloCelda"];
+      this.valueModeloCelda = params["valueModeloCelda"];
+    }else{
+      this.modeloCelda = null;
+    }
     // asignacion dinamica de eventos
     this.events = this.events || {};
     this.events["keyup #" + this.idNombre] = "buscarCooincidencias";
@@ -78,6 +85,10 @@ var AutocompleteView = Backbone.View.extend({
     $("#" + this.targetSugerencias).addClass("oculto");
 		this.model = this.collection.get(event.target.getAttribute("id"));
 		this.collection.reset();
+    if(this.modeloCelda != null){ //esto sólo estará seteado cuando hablamos de un tabla
+      this.modeloCelda.set(this.keyModeloCelda, event.target.getAttribute("id"));
+      this.modeloCelda.set(this.valueModeloCelda, event.target.innerText);
+    }
   },
 	verModelo: function(event){
 		console.log(this.model.toString());

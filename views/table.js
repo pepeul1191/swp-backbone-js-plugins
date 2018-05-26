@@ -34,6 +34,7 @@ var TableView = Backbone.View.extend({
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
 		"change td > select": "cambiarSelect",
+		"click li": "clickSugerenenciaAutocomplete",
 		//botones de paginacion
 		"click tfoot > tr > td > span > .fa-fast-backward": "paginacionIrPrimero",
 		"click tfoot > tr > td > span > .fa-backward": "paginacionIrAnteior",
@@ -294,6 +295,9 @@ var TableView = Backbone.View.extend({
 		      url: params.fila.url,
 		      collection: params.fila.collection,
 		      model: params.fila.model,
+		      modeloCelda: params.modelo,
+		      keyModeloCelda: params.fila.keyModeloCelda,
+		      valueModeloCelda: params.fila.keyModeloInput,
 		    });
       	return td;
       },
@@ -346,6 +350,12 @@ var TableView = Backbone.View.extend({
 		modelo.set(key, valorInput);
 		//thisDOM.parent().parent().children(0).children(0).html();
 	},
+	clickSugerenenciaAutocomplete: function(event){
+  	//console.log("clickSugerenenciaAutocomplete");
+  	//var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
+  	console.log("XDDDD");
+  	console.log(event.target);
+  },
 	quitarFila: function(event){
 		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
 		var tbody = event.target.parentElement.parentElement.parentElement;
