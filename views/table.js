@@ -409,70 +409,78 @@ var TableView = Backbone.View.extend({
 			editados: [],
 			eliminados: [],
 		};
-		for (var key in this.observador) {
-			for (var i = 0; i < this.observador[key].length; i++) {
-				var observadorId = this.observador[key][i];
-				if(key == "nuevo" || key == "editado"){
-					var modelo = this.collection.get(observadorId);
-					data[key + "s"].push(modelo.toJSON());
-				}else{
-					data["eliminados"].push(observadorId);
+		if(this.observador.nuevo.length == 0 && this.observador.editado.length == 0 && this.observador.eliminado.length == 0){
+			$("#" + this.targetMensaje).removeClass("color-danger");
+      $("#" + this.targetMensaje).removeClass("color-success");
+      $("#" + this.targetMensaje).addClass("color-warning");
+      $("#" + this.targetMensaje).html("No se ha ejecutado cambios en la tabla");
+			$("html, body").animate({ scrollTop: $("#" + this.targetMensaje).offset().top }, 1000);
+		}else{
+			for (var key in this.observador) {
+				for (var i = 0; i < this.observador[key].length; i++) {
+					var observadorId = this.observador[key][i];
+					if(key == "nuevo" || key == "editado"){
+						var modelo = this.collection.get(observadorId);
+						data[key + "s"].push(modelo.toJSON());
+					}else{
+						data["eliminados"].push(observadorId);
+					}
 				}
 			}
-		}
-		var viewInstance = this;
-		if(this.extraData != null){
-			data.extra = this.extraData
-		}
-		$.ajax({
-			type: "POST",
-			url: viewInstance.urlGuardar,
-			data: {csrfmiddlewaretoken: CSRF, data: JSON.stringify(data)},
-			async: false,
-			success: function(data){
-				var responseData = JSON.parse(data);
-				if(responseData.tipo_mensaje == "success"){
-					$("#" + viewInstance.targetMensaje).removeClass("color-danger");
-	        $("#" + viewInstance.targetMensaje).removeClass("color-warning");
-	        $("#" + viewInstance.targetMensaje).addClass("color-success");
-	        $("#" + viewInstance.targetMensaje).html(responseData.mensaje[0]);
-					$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
-					//reemplezar los ids de  los nuevos temporales por los generados en la base de datos
-					var idNuevos = responseData.mensaje[1];
-          if(idNuevos != null){
-						for(var p = 0; p < idNuevos.length; p++){
-							var temp = idNuevos[p];
-							var idTemportal = temp.temporal;
-							var idNuevo = temp.nuevo_id;
-							//actualizar id en collection
-							var modelo = viewInstance.collection.get(idTemportal);
-							modelo.set({"id": idNuevo});
-							//actualizar id en DOM de la tabla
-						  var trs = document.getElementById(viewInstance.idTable).lastChild.querySelectorAll("tr");
-							for (var i = 0; i < trs.length; i++) {
-								if(trs[i].firstChild.innerHTML == idTemportal){
-									trs[i].firstChild.innerHTML = idNuevo;
+			var viewInstance = this;
+			if(this.extraData != null){
+				data.extra = this.extraData
+			}
+			$.ajax({
+				type: "POST",
+				url: viewInstance.urlGuardar,
+				data: {csrfmiddlewaretoken: CSRF, data: JSON.stringify(data)},
+				async: false,
+				success: function(data){
+					var responseData = JSON.parse(data);
+					if(responseData.tipo_mensaje == "success"){
+						$("#" + viewInstance.targetMensaje).removeClass("color-danger");
+		        $("#" + viewInstance.targetMensaje).removeClass("color-warning");
+		        $("#" + viewInstance.targetMensaje).addClass("color-success");
+		        $("#" + viewInstance.targetMensaje).html(responseData.mensaje[0]);
+						$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+						//reemplezar los ids de  los nuevos temporales por los generados en la base de datos
+						var idNuevos = responseData.mensaje[1];
+	          if(idNuevos != null){
+							for(var p = 0; p < idNuevos.length; p++){
+								var temp = idNuevos[p];
+								var idTemportal = temp.temporal;
+								var idNuevo = temp.nuevo_id;
+								//actualizar id en collection
+								var modelo = viewInstance.collection.get(idTemportal);
+								modelo.set({"id": idNuevo});
+								//actualizar id en DOM de la tabla
+							  var trs = document.getElementById(viewInstance.idTable).lastChild.querySelectorAll("tr");
+								for (var i = 0; i < trs.length; i++) {
+									if(trs[i].firstChild.innerHTML == idTemportal){
+										trs[i].firstChild.innerHTML = idNuevo;
+									}
 								}
 							}
 						}
+						//resetear el observador
+						viewInstance.observador = {
+							nuevo: [],
+							editado: [],
+							eliminado: [],
+						};
 					}
-					//resetear el observador
-					viewInstance.observador = {
-						nuevo: [],
-						editado: [],
-						eliminado: [],
-					};
+				},
+				error: function(error){
+					$("#" + viewInstance.targetMensaje).removeClass("color-success");
+					$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+					$("#" + viewInstance.targetMensaje).addClass("color-danger");
+					$("#" + viewInstance.targetMensaje).html(viewInstance.mensajes["errorGuardarAjax"]);
+					$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+					console.log(error);
 				}
-			},
-			error: function(error){
-				$("#" + viewInstance.targetMensaje).removeClass("color-success");
-				$("#" + viewInstance.targetMensaje).removeClass("color-warning");
-				$("#" + viewInstance.targetMensaje).addClass("color-danger");
-				$("#" + viewInstance.targetMensaje).html(viewInstance.mensajes["errorGuardarAjax"]);
-				$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
-				console.log(error);
-			}
-		});
+			});
+		}
 	},
 	onChange: function(modeloCambiado) {
 		if(modeloCambiado != null){
