@@ -284,7 +284,12 @@ get '/tipo_estacion/listar' do
 end
 
 get '/estacion/listar' do
-  Estacion.select(:id, :nombre, :descripcion, :latitud, :longitud, :altura, :tipo_estacion_id, :distrito_id).all().to_a.to_json
+  #Estacion.select(:id, :nombre, :descripcion, :latitud, :longitud, :altura, :tipo_estacion_id, :distrito_id).all().to_a.to_json
+   DB.fetch('
+    SELECT E.id, E.nombre, E.descripcion, E.latitud, E.longitud, E.altura, E.tipo_estacion_id, E.distrito_id, D.nombre AS distrito 
+    FROM estaciones E 
+    INNER JOIN vw_distrito_provincia_departamentos D ON D.id = E.distrito_id
+    ').to_a.to_json
 end
 
 post '/estacion/guardar' do
