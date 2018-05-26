@@ -34,7 +34,6 @@ var TableView = Backbone.View.extend({
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
 		"change td > select": "cambiarSelect",
-		"click li": "clickSugerenenciaAutocomplete",
 		//botones de paginacion
 		"click tfoot > tr > td > span > .fa-fast-backward": "paginacionIrPrimero",
 		"click tfoot > tr > td > span > .fa-backward": "paginacionIrAnteior",
@@ -396,7 +395,7 @@ var TableView = Backbone.View.extend({
 					tdProps: 'XD',
 					fila: fila,
 				};
-				var td = this.helper()[fila.tipo](params);
+				var td = this.helper()[fila.tipo](params, this);
 				tr.appendChild(td);
 			}else{
 				var params = {
