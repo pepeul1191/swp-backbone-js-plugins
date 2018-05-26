@@ -96,8 +96,12 @@ var TableView = Backbone.View.extend({
               tdProps: 'XD',
 							fila: fila,
             };
-						var td = viewInstance.helper()[fila.tipo](params);
-						tr.appendChild(td);
+            if(fila !== undefined){
+            	var td = viewInstance.helper()[fila.tipo](params);
+							tr.appendChild(td);
+            }else{
+            	console.error("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
+            }
           }
 					// append de botones de la fila
 					var params = {

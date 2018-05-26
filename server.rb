@@ -284,7 +284,7 @@ get '/tipo_estacion/listar' do
 end
 
 get '/estacion/listar' do
-  Estacion.select(:id, :nombre, :descripcion, :latitud, :longitud, :altura, :tipo_estacion_id).all().to_a.to_json
+  Estacion.select(:id, :nombre, :descripcion, :latitud, :longitud, :altura, :tipo_estacion_id, :distrito_id).all().to_a.to_json
 end
 
 post '/estacion/guardar' do
