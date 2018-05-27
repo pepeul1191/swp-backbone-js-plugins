@@ -13,6 +13,7 @@ var TableView = Backbone.View.extend({
 		this.filaBotones = params["filaBotones"];
 		this.model = params["model"];
     this.collection = params["collection"];
+    this.extraData = null;
 		this.observador = {
 			nuevo: [],
 			editado: [],
