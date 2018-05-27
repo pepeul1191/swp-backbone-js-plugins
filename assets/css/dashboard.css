@@ -15,7 +15,8 @@ footer > p { color: #999; padding-right: 10px; text-align: right; }
 footer > p > a { color: #999; font-weight: bold; }
 footer > p > a:hover { color: #343434; text-decoration: none; }
 .nav-active{background: var(--nav-primary-color); color: var(--primary-color)}
-.li-submodulo{ list-style-type: none; font-size: 1.25em;}
+.li-submodulo{ list-style-type: none; font-size: 1.25em; margin-top: 10px;}
+.li-submodulo:first-child{margin-top: 0px;}
 .li-item{ list-style-type: none; padding: 5px; }
 #app{margin-top: -16px;}
 #body-app { background: #FFF; margin-left: 0px; margin-right: 0px; padding-top: 15px; padding-bottom: 15px; margin-bottom: 10px;}
