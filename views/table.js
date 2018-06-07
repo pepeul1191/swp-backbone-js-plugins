@@ -13,7 +13,8 @@ var TableView = Backbone.View.extend({
 		this.filaBotones = params["filaBotones"];
 		this.model = params["model"];
     this.collection = params["collection"];
-    this.extraData = null;
+		this.extraData = null;
+		this.tableKeys = params['tableKeys'];
 		this.observador = {
 			nuevo: [],
 			editado: [],
@@ -87,27 +88,51 @@ var TableView = Backbone.View.extend({
 				var tbody = document.createElement("tbody");
         for(var i = 0; i < responseData.length; i++){
 					var tr = document.createElement("tr");
-          var modelo = new window[viewInstance.model](responseData[i]);
-          for (var key in responseData[i]) {
-            //console.log(key, responseData[i][key]);
-            var fila = viewInstance.fila[key];
-						var params = {
-              key: key,
-							modelo: modelo,
-              tdProps: 'XD',
-							fila: fila,
-            };
-            if(fila !== undefined){
-            	if(viewInstance.helper()[fila.tipo] !== undefined){
-            		var td = viewInstance.helper()[fila.tipo](params, viewInstance);
-            		tr.appendChild(td);
-            	}else{
-            		console.warn("Componente '" + fila.tipo + "' no se encuentra en helpers para construir el HTML");
-            	}
-            }else{
-            	console.warn("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
-            }
-          }
+					var modelo = new window[viewInstance.model](responseData[i]);
+					if(viewInstance.tableKeys === undefined){
+						for (var key in responseData[i]) {
+							//console.log(key, responseData[i][key]);
+							var fila = viewInstance.fila[key];
+							var params = {
+								key: key,
+								modelo: modelo,
+								tdProps: 'XD',
+								fila: fila,
+							};
+							if(fila !== undefined){
+								if(viewInstance.helper()[fila.tipo] !== undefined){
+									var td = viewInstance.helper()[fila.tipo](params, viewInstance);
+									tr.appendChild(td);
+								}else{
+									console.warn("Componente '" + fila.tipo + "' no se encuentra en helpers para construir el HTML");
+								}
+							}else{
+								console.warn("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
+							}
+						}
+					}else{
+						for (var k = 0; k < viewInstance.tableKeys.length; k++) {
+							var key = viewInstance.tableKeys[k];
+							//console.log(key);
+							var fila = viewInstance.fila[key];
+							var params = {
+								key: key,
+								modelo: modelo,
+								tdProps: 'XD',
+								fila: fila,
+							};
+							if(fila !== undefined){
+								if(viewInstance.helper()[fila.tipo] !== undefined){
+									var td = viewInstance.helper()[fila.tipo](params, viewInstance);
+									tr.appendChild(td);
+								}else{
+									console.warn("Componente '" + fila.tipo + "' no se encuentra en helpers para construir el HTML");
+								}
+							}else{
+								console.warn("Llave '" + key + "' no se encuentra mapeada en la tabla '" + viewInstance.idTable + "'");
+							}
+						}
+					}
 					// append de botones de la fila
 					var params = {
 						modelo: modelo,
