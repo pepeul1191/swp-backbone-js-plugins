@@ -36,6 +36,7 @@ var TableView = Backbone.View.extend({
 		"click button.agregar-fila": "agregarFila",
 		"click button.guardar-tabla": "guardarTabla",
 		"change td > select": "cambiarSelect",
+		"change .input.checkbox": "clickCheckBox",
 		//botones de paginacion
 		"click tfoot > tr > td > span > .fa-fast-backward": "paginacionIrPrimero",
 		"click tfoot > tr > td > span > .fa-backward": "paginacionIrAnteior",
@@ -208,7 +209,7 @@ var TableView = Backbone.View.extend({
 			finHtmlI.classList.add("fa");
 			finHtmlI.classList.add("fa-fast-forward");
 			finHtmlI.classList.add("btn-pagination");
-			finHtmlI.setAttribute("alt", "Últimos " + this.pagination.pageSize + " registros");	
+			finHtmlI.setAttribute("alt", "Últimos " + this.pagination.pageSize + " registros");
 			if(appendLabel == false){
 				document.getElementById(this.pagination.idBotonesPaginacion).appendChild(labelIndice);
 			}
@@ -272,7 +273,22 @@ var TableView = Backbone.View.extend({
 				td.appendChild(inputText);
         //console.log(inputText);
 				return td;
-      },
+			},
+			"check": function(params){
+				var td = document.createElement("td");
+				//td.setAttribute("style", params.estilos);
+				var inputCheck = document.createElement("INPUT");
+				inputCheck.type = "checkbox";
+				inputCheck.setAttribute("style", params.fila.estilos);
+				inputCheck.setAttribute("key", params.key);
+				inputCheck.classList.add("input-check");
+				if(params.modelo.get(params.key) == 1){
+					inputCheck.checked = true;
+				}
+				td.appendChild(inputCheck);
+        //console.log(inputCheck);
+				return td;
+			},
 			"select": function(params){
 				//console.log("LABEL_ID");
 				var td = document.createElement("td");
@@ -325,7 +341,7 @@ var TableView = Backbone.View.extend({
 		      valueModeloCelda: params.fila.keyModeloInput,
 		    });
       	return td;
-      },
+			},
       "btn_td": function(params){
 				//console.log("BTN-TD");
 				var td = document.createElement("td");
@@ -374,6 +390,17 @@ var TableView = Backbone.View.extend({
 		//console.log("inputTextEscribir");
 		modelo.set(key, valorInput);
 		//thisDOM.parent().parent().children(0).children(0).html();
+	},
+	clickCheckBox: function(event){
+		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
+		var checked = event.target.checked;
+		var valor = 0;
+		if(checked == true){
+			valor = 1;
+		}
+		var key = event.target.getAttribute("key");
+		var modelo = this.collection.get(idFila);
+		modelo.set(key, valor);
 	},
 	clickSugerenenciaAutocomplete: function(event){
   	//console.log("clickSugerenenciaAutocomplete");
