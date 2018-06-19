@@ -68,7 +68,6 @@ var TableView = Backbone.View.extend({
   listar: function(){
     this.collection.reset();
     var dataSend= {
-    	csrfmiddlewaretoken: CSRF,
     };
     if(this.pagination !== undefined){
     	dataSend.data = JSON.stringify({
@@ -82,7 +81,10 @@ var TableView = Backbone.View.extend({
     $.ajax({
       type: "GET",
       url: viewInstance.urlListar,
-      data: dataSend,
+			data: dataSend,
+			headers: {
+				[CSRF_KEY]: CSRF,
+			},
       async: false,
       success: function(data){
         var responseData = JSON.parse(data);
@@ -163,7 +165,10 @@ var TableView = Backbone.View.extend({
   	$.ajax({
       type: "GET",
       url: viewInstance.pagination.urlCount,
-      data: {csrfmiddlewaretoken: CSRF,},
+			data: {},
+			headers: {
+				[CSRF_KEY]: CSRF,
+			},
       async: false,
       success: function(count){
       	var temp = count/viewInstance.pagination.pageSize;
@@ -496,7 +501,12 @@ var TableView = Backbone.View.extend({
 			$.ajax({
 				type: "POST",
 				url: viewInstance.urlGuardar,
-				data: {csrfmiddlewaretoken: CSRF, data: JSON.stringify(data)},
+				data: {
+					data: JSON.stringify(data)
+				},
+				headers: {
+					[CSRF_KEY]: CSRF,
+				},
 				async: false,
 				success: function(data){
 					var responseData = JSON.parse(data);

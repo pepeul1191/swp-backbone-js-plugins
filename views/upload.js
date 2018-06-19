@@ -57,7 +57,10 @@ var UploadView = Backbone.View.extend({
 		    var viewInstance = this;
 		    $.ajax({
 		      type: "PUT",
-		      url: viewInstance.url,
+					url: viewInstance.url,
+					headers: {
+						[CSRF_KEY]: CSRF,
+					},
 		      data: formData,
 		      //use contentType, processData for sure.
 		      contentType: false,
@@ -65,7 +68,8 @@ var UploadView = Backbone.View.extend({
 		      beforeSend: function() {
 		        $("#" + viewInstance.subirBtnId).attr("disabled", "true");
 						$("#" + viewInstance.lblMensaje).html("Subiendo");
-		      },
+					},
+
 		      success: function(data) {
 		        var data = JSON.parse(data);
 						$("#" + viewInstance.lblMensaje).html(viewInstance.mensajes["success"]);

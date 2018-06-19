@@ -11,7 +11,7 @@ var AutocompleteView = Backbone.View.extend({
 		this.url = params["url"];
 		this.model = params["model"];
     if(params["modeloCelda"] !== undefined){ // esto sólo estará seteado cuando hablamos de un tabla
-      this.modeloCelda = params["modeloCelda"];  
+      this.modeloCelda = params["modeloCelda"];
       this.keyModeloCelda = params["keyModeloCelda"];
       this.valueModeloCelda = params["valueModeloCelda"];
     }else{
@@ -36,7 +36,12 @@ var AutocompleteView = Backbone.View.extend({
       $.ajax({
         type: "GET",
         url: viewInstance.url,
-        data: {nombre: textoIngresado, csrfmiddlewaretoken: CSRF},
+        data: {
+          nombre: textoIngresado
+        },
+        headers: {
+					[CSRF_KEY]: CSRF,
+				},
         async: false,
         success: function(data){
           var responseData = JSON.parse(data);
