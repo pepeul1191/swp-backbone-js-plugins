@@ -275,6 +275,9 @@ var TableView = Backbone.View.extend({
 				inputText.setAttribute("key", params.key);
         inputText.value = params.modelo.get(params.key);
 				inputText.classList.add("text");
+        if(params.fila.edicion == false){
+          inputText.disabled = true;
+        }
 				td.appendChild(inputText);
         //console.log(inputText);
 				return td;
@@ -290,6 +293,9 @@ var TableView = Backbone.View.extend({
 				if(params.modelo.get(params.key) == 1){
 					inputCheck.checked = true;
 				}
+        if(params.fila.edicion == false){
+          inputCheck.disabled = true;
+        }
 				td.appendChild(inputCheck);
         //console.log(inputCheck);
 				return td;
@@ -309,6 +315,9 @@ var TableView = Backbone.View.extend({
 				}
 				select.setAttribute("key", params.key);
 				select.value = params.modelo.get(params.key);
+        if(params.fila.edicion == false){
+          select.disabled = true;
+        }
 				td.appendChild(select);
 				return td;
 			},
@@ -323,6 +332,9 @@ var TableView = Backbone.View.extend({
 				inputText.setAttribute("id", idInputAutocomplete);
         inputText.value = params.modelo.get(params.fila.keyModeloInput);
 				inputText.classList.add("autocomplete-text");
+        if(params.fila.edicion == false){
+          inputText.disabled = true;
+        }
 				td.appendChild(inputText);
 				var ulSugerencias = document.createElement("ul");
 				ulSugerencias.classList.add("oculto");
