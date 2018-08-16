@@ -15,6 +15,7 @@ var UploadView = Backbone.View.extend({
 		this.maxSize = params["maxSize"];
 		this.allowTypes = params["allowTypes"];
 		this.lblMensaje = params["lblMensaje"];
+		this.method = params["method"];
     // asignacion dinamica de eventos
     this.events = this.events || {};
     this.events["click #" + this.buscarBtnId] = "triggerInputFile";
@@ -56,7 +57,7 @@ var UploadView = Backbone.View.extend({
 		    //for(var pair of formData.entries()) {console.log(pair[0]+ ', ' + pair[1]);}
 		    var viewInstance = this;
 		    $.ajax({
-		      type: "PUT",
+		      type: viewInstance.method,
 					url: viewInstance.url,
 					headers: {
 						[CSRF_KEY]: CSRF,
