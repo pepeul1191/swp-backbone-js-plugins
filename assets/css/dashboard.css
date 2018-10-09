@@ -32,7 +32,7 @@ footer > p > a:hover { color: #343434; text-decoration: none; }
 .btn-default{ border-radius: 0px; font-size: 11px; padding: 0.20rem 0.40rem; background: #f7f7f7; color: #484848; border: solid 1px #c1c1c1; }
 .btn-default:hover{ background: #c1c1c1; color: #343434; }
 .oculto{ display: none; }
-.form-control{border-radius: 0px; font-size: 0.7rem; padding: .255rem .55rem;}
+.form-control{border-radius: 0px; font-size: 0.7rem; padding: .255rem .55rem; height: calc(1.50rem + 2px);}
 .form-group-btn{padding-top: 25px;}
 select.form-control:not([size]):not([multiple]) { height: calc(1.50rem + 2px); }
 .btn-file{margin-right: 10px;}

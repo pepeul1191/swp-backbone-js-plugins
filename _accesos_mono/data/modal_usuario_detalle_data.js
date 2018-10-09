@@ -1,7 +1,7 @@
 var dataUsuarioDetalleView = {
   el: "body",
   containerModal: "modal-container",
-  urlTemplate: STATICS_URL + "templates/accesos/usuario_detalle.html",
+  urlTemplate: STATICS_URL + "templates/usuario_detalle.html",
   handlebarsTemplateId: "usuario-detalle-template",
   targetMensaje: "mensajeRptaDetalle",
   context: {
