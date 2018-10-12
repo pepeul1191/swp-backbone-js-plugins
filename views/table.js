@@ -633,6 +633,16 @@ var TableView = Backbone.View.extend({
 						$("#" + viewInstance.targetMensaje).addClass("color-success");
 						$("#" + viewInstance.targetMensaje).html(data["mensaje"]["mensaje"]);
 						viewInstance.collection.get(idFila).attributes[viewInstance.file.model_key] = data["mensaje"]["file_url"];
+						//actualizar observador
+						if(idFila.indexOf(viewInstance.idTable) >= 0){
+							if(!_.contains(viewInstance.observador.nuevo, idFila)){
+								viewInstance.observador.nuevo.push(idFila);
+							}
+						}else{
+							if(!_.contains(viewInstance.observador.editado, idFila)){
+								viewInstance.observador.editado.push(idFila);
+							}
+						}
 		      },
 		      error: function(error) {
 		        console.log(error);
