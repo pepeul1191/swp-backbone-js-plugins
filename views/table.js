@@ -15,6 +15,7 @@ var TableView = Backbone.View.extend({
     this.collection = params["collection"];
 		this.extraData = null;
 		this.tableKeys = params['tableKeys'];
+		this.file = params['file'];
 		this.observador = {
 			nuevo: [],
 			editado: [],
@@ -42,6 +43,10 @@ var TableView = Backbone.View.extend({
 		"click tfoot > tr > td > span > .fa-backward": "paginacionIrAnteior",
 		"click tfoot > tr > td > span > .fa-forward": "paginacionIrSiguiente",
 		"click tfoot > tr > td > span > .fa-fast-forward": "paginacionIrUltimo",
+		//botones de fileUpload
+		"click i.seleccionar-archivo": "fileSelect",
+		"click i.subir-archivo": "fileUpload",
+		"click i.ver-archivo": "fileView",
   },
 	//método que permite la herencia de eventos
 	inheritEvents: function(parent) {
@@ -569,4 +574,96 @@ var TableView = Backbone.View.extend({
 			//console.log(this.observador);
 		}
   },
+	fileSelect: function(event){
+		var viewInstance = this;
+		$("#" +viewInstance.file.input_file_id).trigger("click");
+	},
+	fileGetExtension: function(file){
+		var temp = file.name.split(".");
+		return temp[temp.length - 1];
+	},
+	fileUpload: function(event){
+		var viewInstance = this;
+		var file = $("#" +viewInstance.file.input_file_id)[0].files[0];
+		if(!_.contains(viewInstance.file.formats, this.fileGetExtension(file))){
+			$("#" + viewInstance.targetMensaje).removeClass("color-success");
+			$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+			$("#" + viewInstance.targetMensaje).addClass("color-danger");
+			$("#" + viewInstance.targetMensaje).html("Formato de archivo no válido");
+			$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+		}else{
+			var file_size_mb = file.size / Math.pow(10, 6);
+			if(file.size < file_size_mb){
+				$("#" + viewInstance.targetMensaje).removeClass("color-success");
+				$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+				$("#" + viewInstance.targetMensaje).addClass("color-danger");
+				$("#" + viewInstance.targetMensaje).html("Tamaño de archivo supera el máximo permitido (" + viewInstance.file.max_size + "mb)");
+				$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+			}else{
+				var formData = new FormData();
+				formData.append(viewInstance.file.form_name, file);
+		    // anexar al formData los datos extras a enviar
+				var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
+				var model = viewInstance.collection.get(idFila).attributes;
+		    for(var i = 0; i < viewInstance.file.model_attributes.length; i++){
+		      formData.append(viewInstance.file.model_attributes[i], model[viewInstance.file.model_attributes[i]]);
+		    }
+		    //for(var pair of formData.entries()) {console.log(pair[0]+ ', ' + pair[1]);}
+		    var viewInstance = this;
+		    $.ajax({
+		      type: viewInstance.file.method,
+					url: viewInstance.file.url,
+					headers: {
+						[CSRF_KEY]: CSRF,
+					},
+		      data: formData,
+		      //use contentType, processData for sure.
+		      contentType: false,
+		      processData: false,
+		      beforeSend: function() {
+						$("#" + viewInstance.targetMensaje).removeClass("color-success");
+						$("#" + viewInstance.targetMensaje).removeClass("color-error");
+						$("#" + viewInstance.targetMensaje).addClass("color-warning");
+						$("#" + viewInstance.targetMensaje).html("Subiendo");
+					},
+		      success: function(data) {
+		        var data = JSON.parse(data);
+						$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+						$("#" + viewInstance.targetMensaje).removeClass("color-error");
+						$("#" + viewInstance.targetMensaje).addClass("color-success");
+						$("#" + viewInstance.targetMensaje).html(data["mensaje"]["mensaje"]);
+						viewInstance.collection.get(idFila).attributes[viewInstance.file.model_key] = data["mensaje"]["file_url"];
+		      },
+		      error: function(error) {
+		        console.log(error);
+						$("#" + viewInstance.targetMensaje).removeClass("color-success");
+						$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+						$("#" + viewInstance.targetMensaje).addClass("color-danger");
+						$("#" + viewInstance.targetMensaje).html("Ocurrió un error en subir el archivo al servidor");
+						$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+		      }
+		    });
+			}
+		}
+	},
+	fileView: function(event){
+		var viewInstance = this;
+		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
+		var model = viewInstance.collection.get(idFila).attributes;
+		var fileUrl = viewInstance.collection.get(idFila).attributes['file_url'];
+		if (fileUrl != null){
+			$("#" + viewInstance.targetMensaje).removeClass("color-success");
+			$("#" + viewInstance.targetMensaje).removeClass("color-error");
+			$("#" + viewInstance.targetMensaje).addClass("color-warning");
+			$("#" + viewInstance.targetMensaje).html("");
+			var win = window.open(fileUrl, '_blank');
+  		win.focus();
+		}else{
+			$("#" + viewInstance.targetMensaje).removeClass("color-success");
+			$("#" + viewInstance.targetMensaje).removeClass("color-warning");
+			$("#" + viewInstance.targetMensaje).addClass("color-danger");
+			$("#" + viewInstance.targetMensaje).html("No se ha anexado ninguna imagen al registro");
+			$("html, body").animate({ scrollTop: $("#" + viewInstance.targetMensaje).offset().top }, 1000);
+		}
+	},
 });
