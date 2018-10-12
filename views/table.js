@@ -650,7 +650,7 @@ var TableView = Backbone.View.extend({
 		var viewInstance = this;
 		var idFila = event.target.parentElement.parentElement.firstChild.innerHTML;
 		var model = viewInstance.collection.get(idFila).attributes;
-		var fileUrl = viewInstance.collection.get(idFila).attributes['file_url'];
+		var fileUrl = viewInstance.collection.get(idFila).attributes[viewInstance.file.model_key];
 		if (fileUrl != null){
 			$("#" + viewInstance.targetMensaje).removeClass("color-success");
 			$("#" + viewInstance.targetMensaje).removeClass("color-error");
