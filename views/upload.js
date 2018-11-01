@@ -81,7 +81,9 @@ var UploadView = Backbone.View.extend({
 						$("#" + viewInstance.lblMensaje).addClass("color-success");
 						$("#" + viewInstance.verBtnId).attr("disabled", false);
 						// setear modelo
-						viewInstance.model.set("id", data["mensaje"][1]);
+						//viewInstance.model.set("id", data["mensaje"][1]);
+			      			viewInstance.model.set("file_id", data["mensaje"]["file_id"]);
+						viewInstance.model.set("file_url", data["mensaje"]["file_url"])
 						for(var i = 0; i < viewInstance.extraData.length; i++){
 							var extra_data = viewInstance.model.get("extra_data");
 							extra_data[viewInstance.extraData[i]["llave"]] = $("#" + viewInstance.extraData[i]["domId"]).val();
