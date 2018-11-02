@@ -15,6 +15,7 @@ var TableView = Backbone.View.extend({
     this.collection = params["collection"];
 		this.extraData = null;
 		this.tableKeys = params['tableKeys'];
+		this.file = params['file'];
 		this.observador = {
 			nuevo: [],
 			editado: [],
