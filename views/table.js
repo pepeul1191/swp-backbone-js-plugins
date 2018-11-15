@@ -473,7 +473,10 @@ var TableView = Backbone.View.extend({
 		// agregar modelo a collection
 		this.collection.add(modelo);
 		//console.log(tr);console.log(tbody);
-		tbody.appendChild(tr);
+		//tbody.appendChild(tr);
+		var children = document.querySelectorAll('#' + this.idTable + ' > *');
+		console.log(children[children.length - 1]);
+		children[children.length - 1].appendChild(tr);
 	},
 	guardarTabla: function(event){
 		var data = {
