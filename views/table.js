@@ -446,7 +446,6 @@ var TableView = Backbone.View.extend({
 		modelo.set(key, valorSelect);
 	},
 	agregarFila: function(event){
-		var tbody = event.target.parentElement.parentElement.parentElement.parentElement.lastChild;
 		var modelo = new window[this.model]({id: this.idTable + _.random(0, 1000)});
 		var tr = document.createElement("tr");
 		for (var key in this.fila) {
@@ -473,10 +472,20 @@ var TableView = Backbone.View.extend({
 		// agregar modelo a collection
 		this.collection.add(modelo);
 		//console.log(tr);console.log(tbody);
-		//tbody.appendChild(tr);
 		var children = document.querySelectorAll('#' + this.idTable + ' > *');
-		console.log(children[children.length - 1]);
-		children[children.length - 1].appendChild(tr);
+		var tbody = null;
+		for(var i = 0; i < children.length; i++){
+		  if(children[i].nodeName == "TBODY"){
+		  	tbody = children[i];
+		  }
+		}
+		if(tbody == null){
+		  tbody = document.createElement("tbody");
+		  tbody.appendChild(tr);
+		  document.getElementById(this.idTable).appendChild(tbody);
+		}else{
+		  tbody.appendChild(tr);
+		}
 	},
 	guardarTabla: function(event){
 		var data = {
