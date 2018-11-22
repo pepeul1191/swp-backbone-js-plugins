@@ -36,7 +36,7 @@ var ModuloView = Backbone.View.extend({
 		var data = { };
 		var template_compiled = null;
 		$.ajax({
-		   url: STATICS_URL + 'templates/accesos/modulo.html',
+		   url: STATICS_URL + 'bower_components/swp-backbone/_accesos_mono/modulo.html',
 		   type: "GET",
 		   async: false,
 		   success: function(source) {
