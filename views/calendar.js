@@ -1,6 +1,6 @@
 var CalendarView = Backbone.View.extend({
-	//el: "#formUbicaciones", definido en el constructor
-	initialize: function(params){
+  //el: "#formUbicaciones", definido en el constructor
+  initialize: function(params){
     // inicializar variables
     this.body = document.getElementById(params["body"]);
     this.next = params["next"];
@@ -15,7 +15,8 @@ var CalendarView = Backbone.View.extend({
     this.model = params["model"];
     this.collection = params["collection"];
     this.todaysDate = params["todaysDate"];
-   // asignacion dinamica de eventos
+    this.show_selected = params["show_selected"];
+    // asignacion dinamica de eventos
     //this.events = this.events || {};
     //this.events["click #" + this.next] = "mesSiguiente";
     //this.events["click #" + this.previous] = "mesAnterior";
@@ -44,12 +45,16 @@ var CalendarView = Backbone.View.extend({
       var diaSeleccion = target.getAttribute("data-calendar-date");
       this.targetSeleccion.innerHTML = diaSeleccion;
       if (target.classList.contains('vcal-date--selected')) {
-        target.classList.remove('vcal-date--selected');
+        if(this.show_selected != null && this.show_selected == true){
+          target.classList.remove('vcal-date--selected');
+        }
         var viewCollection = this.collection;
         var modelo = this.collection.where({fecha: diaSeleccion});
         this.collection.remove(modelo);
       }else{
-        target.classList.add('vcal-date--selected')
+        if(this.show_selected != null && this.show_selected == true){
+          target.classList.add('vcal-date--selected');
+        }
         var modelo = new window[this.model]({fecha: diaSeleccion});
         this.collection.add(modelo);
       }
