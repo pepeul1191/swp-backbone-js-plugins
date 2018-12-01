@@ -24,6 +24,12 @@ Para corregir el error ENOSPC en caso de presentarse:
 
     $ bower install --save swp-backbone
 
+### Git Tags
+
+    $ git tag
+    $ git tag -a v1.4 -m "my version 1.4"
+    $ git push origin <tag_name>
+
 ---
 
 Fuentes:
@@ -42,3 +48,5 @@ Fuentes:
 + https://stackoverflow.com/questions/7735133/backbone-js-view-inheritance?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 + http://maximilianschmitt.me/posts/inherit-events-from-backbone-views/
 + https://codepen.io/colorlib/pen/rxddKy (login)
++ https://stackoverflow.com/questions/5195859/how-do-you-push-a-tag-to-a-remote-repository-using-git
++ https://git-scm.com/book/en/v2/Git-Basics-Tagging

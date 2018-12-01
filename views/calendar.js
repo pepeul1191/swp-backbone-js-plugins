@@ -15,15 +15,17 @@ var CalendarView = Backbone.View.extend({
     this.model = params["model"];
     this.collection = params["collection"];
     this.todaysDate = params["todaysDate"];
-    // asignacion dinamica de eventos
-    this.events = this.events || {};
-    this.events["click #" + this.next] = "mesSiguiente";
-		this.events["click #" + this.previous] = "mesAnterior";
-    this.delegateEvents();
-	},
+   // asignacion dinamica de eventos
+    //this.events = this.events || {};
+    //this.events["click #" + this.next] = "mesSiguiente";
+    //this.events["click #" + this.previous] = "mesAnterior";
+    //this.delegateEvents();
+  },
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
     "click div.vcal-date--active": "seleccionarDia",
+    ["click " + this.next]: "mesSiguiente",
+    ["click " + this.previous]: "mesAnterior",
   },
   cargarSelecciones: function(datos){
     for(var i = 0; i < datos.length; i++){
