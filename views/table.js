@@ -16,6 +16,7 @@ var TableView = Backbone.View.extend({
 		this.extraData = null;
 		this.tableKeys = params['tableKeys'];
 		this.file = params['file'];
+		this.fileServerUrl = params['fileServerUrl'];
 		this.observador = {
 			nuevo: [],
 			editado: [],
@@ -644,7 +645,7 @@ var TableView = Backbone.View.extend({
 						$("#" + viewInstance.targetMensaje).removeClass("color-error");
 						$("#" + viewInstance.targetMensaje).addClass("color-success");
 						$("#" + viewInstance.targetMensaje).html(data["mensaje"]["mensaje"]);
-						viewInstance.collection.get(idFila).attributes[viewInstance.file.model_key] = data["mensaje"]["file_url"];
+						viewInstance.collection.get(idFila).attributes[viewInstance.file.model_key] = data["mensaje"]["file_id"];
 						//actualizar observador
 						if(idFila.indexOf(viewInstance.idTable) >= 0){
 							if(!_.contains(viewInstance.observador.nuevo, idFila)){
@@ -678,7 +679,7 @@ var TableView = Backbone.View.extend({
 			$("#" + viewInstance.targetMensaje).removeClass("color-error");
 			$("#" + viewInstance.targetMensaje).addClass("color-warning");
 			$("#" + viewInstance.targetMensaje).html("");
-			var win = window.open(fileUrl, '_blank');
+			var win = window.open(viewInstance.fileServerUrl + fileUrl, '_blank');
   		win.focus();
 		}else{
 			$("#" + viewInstance.targetMensaje).removeClass("color-success");

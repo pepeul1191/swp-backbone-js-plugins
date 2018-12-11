@@ -16,6 +16,7 @@ var CalendarView = Backbone.View.extend({
     this.collection = params["collection"];
     this.todaysDate = params["todaysDate"];
     this.show_selected = params["show_selected"];
+    this.show_one = params["show_one"];
     // asignacion dinamica de eventos
     //this.events = this.events || {};
     //this.events["click #" + this.next] = "mesSiguiente";
@@ -52,6 +53,9 @@ var CalendarView = Backbone.View.extend({
         var modelo = this.collection.where({fecha: diaSeleccion});
         this.collection.remove(modelo);
       }else{
+        if(this.show_one == true){
+          $("#" + this.body.getAttribute("id") + " " + ".vcal-date--selected").removeClass("vcal-date--selected");
+        }
         if(this.show_selected != null && this.show_selected == true){
           target.classList.add('vcal-date--selected');
         }
@@ -97,7 +101,19 @@ var CalendarView = Backbone.View.extend({
     var dateEl = document.createElement("span");
     dateEl.innerHTML = num;
     newDay.className = "vcal-date";
-    newDay.setAttribute("data-calendar-date", year + "-" + (mes + 1) + "-" + num);
+    if(num < 10){  
+      if(mes < 10){
+        newDay.setAttribute("data-calendar-date", year + "-0" + (mes + 1) + "-0" + num);
+      }else{
+        newDay.setAttribute("data-calendar-date", year + "-" + (mes + 1) + "-0" + num);
+      }
+    }else{  
+      if(mes < 10){
+        newDay.setAttribute("data-calendar-date", year + "-0" + (mes + 1) + "-" + num);
+      }else{
+        newDay.setAttribute("data-calendar-date", year + "-" + (mes + 1) + "-" + num);
+      }
+    }
     // if it"s the first day of the month
     if (num === 1) {
       if (day === 0) {
